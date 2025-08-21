@@ -1,4 +1,6 @@
-﻿namespace Engine.TileMap
+﻿using System.Diagnostics;
+
+namespace Engine.TileMap
 {
     public class TileMap2D
     {
@@ -10,6 +12,7 @@
         int maxWidth;
 
         public bool visible;
+        public Color colorOfTiles = Color.White;
         // tileMapPosition = top left corner that start drawing
         // textureTiles = File that textures will inherit to drawing
         // tileSize = How big is one tile
@@ -83,11 +86,11 @@
 
             foreach (var tile in tiles)
             {
-                GLOBALS.SpriteBatch.Draw(texture, tile.Key, new Rectangle(tile.Value % maxWidth * widthOfTile, tile.Value / maxWidth * widthOfTile, widthOfTile, widthOfTile), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0);
+                GLOBALS.SpriteBatch.Draw(texture, tile.Key, new Rectangle(tile.Value % maxWidth * widthOfTile, tile.Value / maxWidth * widthOfTile, widthOfTile, widthOfTile), colorOfTiles, 0f, Vector2.Zero, SpriteEffects.None, 0);
                 //Debug.WriteLine(new Vector2(tile.Value % maxWidth * widthOfTile, tile.Value / maxWidth * widthOfTile));
             }
         }
-        public Rectangle[] getCollision()
+        public Rectangle[] GetCollision()
         {
             Rectangle[] result = new Rectangle[tiles.Count];
             int i = 0;
@@ -98,5 +101,28 @@
             }
             return result;
         }
+/// <summary>
+/// Gets tile that is closest based on coordinates. In other words it rounds coordinates to tile position
+/// </summary>
+/// <returns>Rectangle of tile</returns>
+        public bool TryGetCloseTile(Vector2 pos, out (Rectangle, int) tile)
+        {
+            pos -= tileMapPosition;
+            Rectangle result = new Rectangle((int)Math.Floor(pos.X / tileSize.Width) * tileSize.Height, (int)Math.Floor(pos.Y / tileSize.Height) * tileSize.Width, widthOfTile, widthOfTile);
+            Debug.WriteLine(result);
+            
+            if (tiles.TryGetValue(result, out var value))
+            {
+                tile = (result, tiles[result]);
+                return true;
+            }
+            tile = (Rectangle.Empty, 0);
+            return false;
+
+        }
+        public void RemoveTile(Rectangle tileToDelete)
+        {
+            tiles.Remove(tileToDelete);
+        } 
     }
 }
