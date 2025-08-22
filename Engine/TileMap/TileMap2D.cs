@@ -66,6 +66,7 @@ namespace Engine.TileMap
             this.texture = textureTiles;
             this.widthOfTile = widthOfTile;
             this.maxWidth = textureTiles.Width / widthOfTile;
+            if (maxWidth == 0) maxWidth = 1;
             this.visible = visible;
 
             for (int i = 0; i < tilemapSize.Width; i++)
