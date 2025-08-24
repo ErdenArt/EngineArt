@@ -18,8 +18,6 @@ namespace Engine.Drawings.UI
             {
                 child.Draw();
             }
-
-            UIText.Draw(GLOBALS.Font, $"P. Bounds {FinalBounds}", Color.Red, Alignments.TopLeft, Alignments.TopLeft, Vector2.UnitY * Bounds.X, 1f);
         }
 
 

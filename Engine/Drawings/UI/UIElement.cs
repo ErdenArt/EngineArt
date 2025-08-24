@@ -31,8 +31,11 @@ namespace EngineArt.Engine.Drawings.UI
             {
                 if (parent != null)
                 {
-                    Point point = SetAligmentPositionForParent(Alignment, Bounds) + Parent.FinalBounds.Location;
-                    return new Rectangle(Bounds.X +  point.X, Bounds.Y + point.Y, Bounds.Width, Bounds.Height);
+                    Point point = SetAligmentPositionForParent(Alignment, Bounds) 
+                                + parent.FinalBounds.Location 
+                                + Bounds.Location;
+
+                    return new Rectangle(point.X, point.Y, Bounds.Width, Bounds.Height);
                 }
                 return Bounds;
             }
@@ -44,39 +47,37 @@ namespace EngineArt.Engine.Drawings.UI
             Point parentBoundsSize = Point.Zero;
             if (Parent != null)
             {
-                parentBoundsSize = Parent.FinalBounds.Size + Parent.FinalBounds.Location;
-                if (Parent.FinalBounds.X != 0)
-                    Debug.WriteLine("Tutaj");
+                parentBoundsSize = Parent.FinalBounds.Size;
             }
 
             switch (alignmet)
             {
                 case Alignments.TopLeft:
-                    setAligment = new Point(rect.X, rect.Y);
+                    setAligment = new Point(0, 0);
                     break;
                 case Alignments.Top:
-                    setAligment = new Point(rect.X + parentBoundsSize.X / 2 - rect.Width / 2, rect.Y);
+                    setAligment = new Point(0 + parentBoundsSize.X / 2 - rect.Width / 2, 0);
                     break;
                 case Alignments.TopRight:
-                    setAligment = new Point(rect.X + parentBoundsSize.X - rect.Width, rect.Y);
+                    setAligment = new Point(0 + parentBoundsSize.X - rect.Width, 0);
                     break;
                 case Alignments.Left:
-                    setAligment = new Point(rect.X, rect.Y + parentBoundsSize.Y / 2 - rect.Height / 2);
+                    setAligment = new Point(0, 0 + parentBoundsSize.Y / 2 - rect.Height / 2);
                     break;
                 case Alignments.Center:
-                    setAligment = new Point(rect.X + parentBoundsSize.X / 2 - rect.Width / 2, rect.Y + parentBoundsSize.Y / 2 - rect.Height / 2);
+                    setAligment = new Point(0 + parentBoundsSize.X / 2 - rect.Width / 2, 0 + parentBoundsSize.Y / 2 - rect.Height / 2);
                     break;
                 case Alignments.Right:
-                    setAligment = new Point(rect.X + parentBoundsSize.X - rect.Width, rect.Y + parentBoundsSize.Y / 2 - rect.Height / 2);
+                    setAligment = new Point(0 + parentBoundsSize.X - rect.Width, 0 + parentBoundsSize.Y / 2 - rect.Height / 2);
                     break;
                 case Alignments.BottomLeft:
-                    setAligment = new Point(rect.X, rect.Y + parentBoundsSize.Y - rect.Height);
+                    setAligment = new Point(0, 0 + parentBoundsSize.Y - rect.Height);
                     break;
                 case Alignments.Bottom:
-                    setAligment = new Point(rect.X + parentBoundsSize.X / 2 - rect.Width / 2, rect.Y + parentBoundsSize.Y - rect.Height);
+                    setAligment = new Point(0 + parentBoundsSize.X / 2 - rect.Width / 2, 0 + parentBoundsSize.Y - rect.Height);
                     break;
                 case Alignments.BottomRight:
-                    setAligment = new Point(rect.X + parentBoundsSize.X - rect.Width, rect.Y + parentBoundsSize.Y - rect.Height);
+                    setAligment = new Point(0 + parentBoundsSize.X - rect.Width, 0 + parentBoundsSize.Y - rect.Height);
                     break;
             }
             return setAligment;
