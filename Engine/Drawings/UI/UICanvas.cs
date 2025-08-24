@@ -1,20 +1,19 @@
-﻿namespace Engine.Drawings
+﻿using EngineArt.Engine.Drawings.UI;
+using System.Reflection;
+
+namespace Engine.Drawings
 {
-    public class UICanvas
+    public class UICanvas : UIElement
     {
-        List<Action> drawCalls;
-        public UICanvas(List<Action> drawCalls)
+        public UICanvas()
         {
-            this.drawCalls = drawCalls;
+            Bounds = new Rectangle(0,0,GLOBALS.WindowSize.X, GLOBALS.WindowSize.Y);
         }
-        public void Draw()
+        public override void Draw()
         {
-            if (drawCalls != null)
+            foreach (var child in Children)
             {
-                foreach (var drawAction in drawCalls)
-                {
-                    drawAction();
-                }
+                child.Draw();
             }
         }
     }

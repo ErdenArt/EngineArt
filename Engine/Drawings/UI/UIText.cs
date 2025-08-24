@@ -1,14 +1,36 @@
-﻿using Engine.Drawings;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿
+using EngineArt.Engine.Drawings.UI;
 using System.Diagnostics;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Engine.Drawings.UI
 {
-    public static class UIText
+    public class UIText : UIElement
     {
+        public SpriteFont Font = GLOBALS.Font;
+        public string Text = "";
+        public Color TextColor = Color.White;
+        public Alignments TextAligment;
+
+        float rotation;
+        public float Rotation { get => MathHelper.ToRadians(rotation); set => rotation = MathHelper.ToDegrees(value); }
+        public Vector2 RotationPosition;
+        public float TextScale = 1f;
+        public override void Draw()
+        {
+            Vector2 endPosition = new Vector2();
+            endPosition += SetAligmentPosition(Alignment)
+                         + SetAligmentForText(Text, Font, TextAligment)
+                         + Position;
+
+
+            GLOBALS.SpriteBatch.DrawString(Font, Text, endPosition, TextColor, Rotation, RotationPosition, TextScale, SpriteEffects.None, 0f);
+            //Debug.WriteLine(Parent);
+
+            foreach (var child in Children)
+            {
+                child.Draw();
+            }
+        }
         public static void Draw(SpriteFont spriteFont, String text, Color color, Alignments screenAlignment, Alignments textAlignment, Vector2 position, float textSize)
         {
             Vector2 endPosition = new Vector2();
@@ -20,7 +42,7 @@ namespace Engine.Drawings.UI
             GLOBALS.SpriteBatch.DrawString(spriteFont, text, endPosition, color, 0f, Vector2.Zero, textSize, SpriteEffects.None, 0);
         }
 
-        static public Vector2 SetAligmentForText(String text, SpriteFont font, Alignments alignment)
+        static Vector2 SetAligmentForText(String text, SpriteFont font, Alignments alignment)
         {
             Vector2 setAligment = new Vector2(0, 0);
             Vector2 textSize = font.MeasureString(text);

@@ -1,25 +1,28 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Engine.Mathematic;
-using Engine;
+﻿using EngineArt.Engine.Drawings.UI;
+using ImGuiNET;
+using MonoGame.ImGuiNet;
+using System.Diagnostics;
 
 namespace Engine.Drawings.UI
 {
-    // Main script that is used mainly for UI
-    public enum Alignments
+    public class UIBoxes : UIElement
     {
-        TopLeft,
-        Top,
-        TopRight,
-        Left,
-        Center,
-        Right,
-        BottomLeft,
-        Bottom,
-        BottomRight
-    }
-    public static class UIBoxes
-    {
+        public Texture2D Texture = GLOBALS.Pixel;
+        public Color BackgroundColor;
+
+
+        public override void Draw()
+        {;
+            GLOBALS.SpriteBatch.Draw(Texture, FinalBounds, BackgroundColor);
+            foreach (var child in Children)
+            {
+                child.Draw();
+            }
+
+            UIText.Draw(GLOBALS.Font, $"P. Bounds {FinalBounds}", Color.Red, Alignments.TopLeft, Alignments.TopLeft, Vector2.UnitY * Bounds.X, 1f);
+        }
+
+
         public static void Draw(Alignments alignmet, Rectangle rect, Color color = default)
         {
             if (color == default) color = Color.White;
@@ -43,28 +46,28 @@ namespace Engine.Drawings.UI
                     setAligment = new Point(rect.X, rect.Y);
                     break;
                 case Alignments.Top:
-                    setAligment = new Point(rect.X + GLOBALS.Graphics.PreferredBackBufferWidth / 2 - rect.Width / 2, rect.Y);
+                    setAligment = new Point(rect.X + GLOBALS.WindowSize.X / 2 - rect.Width / 2, rect.Y);
                     break;
                 case Alignments.TopRight:
-                    setAligment = new Point(rect.X + GLOBALS.Graphics.PreferredBackBufferWidth - rect.Width, rect.Y);
+                    setAligment = new Point(rect.X + GLOBALS.WindowSize.X - rect.Width, rect.Y);
                     break;
                 case Alignments.Left:
-                    setAligment = new Point(rect.X, rect.Y + GLOBALS.Graphics.PreferredBackBufferHeight / 2 - rect.Height / 2);
+                    setAligment = new Point(rect.X, rect.Y + GLOBALS.WindowSize.Y / 2 - rect.Height / 2);
                     break;
                 case Alignments.Center:
-                    setAligment = new Point(rect.X + GLOBALS.Graphics.PreferredBackBufferWidth / 2 - rect.Width / 2, rect.Y + GLOBALS.Graphics.PreferredBackBufferHeight / 2 - rect.Height / 2);
+                    setAligment = new Point(rect.X + GLOBALS.WindowSize.X / 2 - rect.Width / 2, rect.Y + GLOBALS.WindowSize.Y / 2 - rect.Height / 2);
                     break;
                 case Alignments.Right:
-                    setAligment = new Point(rect.X + GLOBALS.Graphics.PreferredBackBufferWidth - rect.Width, rect.Y + GLOBALS.Graphics.PreferredBackBufferHeight / 2 - rect.Height / 2);
+                    setAligment = new Point(rect.X + GLOBALS.WindowSize.X - rect.Width, rect.Y + GLOBALS.WindowSize.Y / 2 - rect.Height / 2);
                     break;
                 case Alignments.BottomLeft:
-                    setAligment = new Point(rect.X, rect.Y + GLOBALS.Graphics.PreferredBackBufferHeight - rect.Height);
+                    setAligment = new Point(rect.X, rect.Y + GLOBALS.WindowSize.Y - rect.Height);
                     break;
                 case Alignments.Bottom:
-                    setAligment = new Point(rect.X + GLOBALS.Graphics.PreferredBackBufferWidth / 2 - rect.Width / 2, rect.Y + GLOBALS.Graphics.PreferredBackBufferHeight - rect.Height);
+                    setAligment = new Point(rect.X + GLOBALS.WindowSize.X / 2 - rect.Width / 2, rect.Y + GLOBALS.WindowSize.Y - rect.Height);
                     break;
                 case Alignments.BottomRight:
-                    setAligment = new Point(rect.X + GLOBALS.Graphics.PreferredBackBufferWidth - rect.Width, rect.Y + GLOBALS.Graphics.PreferredBackBufferHeight - rect.Height);
+                    setAligment = new Point(rect.X + GLOBALS.WindowSize.X - rect.Width, rect.Y + GLOBALS.WindowSize.Y - rect.Height);
                     break;
             }
             return setAligment;
