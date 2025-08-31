@@ -1,4 +1,5 @@
 ﻿using Engine;
+using EngineArt.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,14 +39,34 @@ namespace Bloom_Sack.Engine.Drawings
             texture.SetData(colorData);
             return texture;
         }
-        public static void DrawEmptyBox(Rectangle rect, Color color = default)
+        public static void DrawEmptyBox(Rectangle rect, Color color = default, int lineWidth = 1)
         {
             if (color == default) color = Color.Red;
+            lineWidth -= 1;
 
-            GLOBALS.SpriteBatch.Draw(GLOBALS.Pixel, new Rectangle(rect.X, rect.Y, rect.Width, 1), color);
-            GLOBALS.SpriteBatch.Draw(GLOBALS.Pixel, new Rectangle(rect.X, rect.Y + 1, 1, rect.Height), color);
-            GLOBALS.SpriteBatch.Draw(GLOBALS.Pixel, new Rectangle(rect.X + rect.Width, rect.Y, 1, rect.Height), color);
-            GLOBALS.SpriteBatch.Draw(GLOBALS.Pixel, new Rectangle(rect.X + 1, rect.Y + rect.Height, rect.Width, 1), color);
+            GLOBALS.SpriteBatch.Draw(GLOBALS.Pixel,
+                new Rectangle(rect.X - lineWidth,
+                              rect.Y - lineWidth,
+                              rect.Width + lineWidth,
+                              1 + lineWidth), color);
+
+            GLOBALS.SpriteBatch.Draw(GLOBALS.Pixel,
+                new Rectangle(rect.X - lineWidth,
+                              rect.Y + 1 - lineWidth,
+                              1 + lineWidth,
+                              rect.Height + lineWidth), color);
+
+            GLOBALS.SpriteBatch.Draw(GLOBALS.Pixel,
+                new Rectangle(rect.X + rect.Width - lineWidth,
+                              rect.Y - lineWidth,
+                              1 + lineWidth,
+                              rect.Height + lineWidth), color);
+
+            GLOBALS.SpriteBatch.Draw(GLOBALS.Pixel,
+                new Rectangle(rect.X + 1 - lineWidth,
+                              rect.Y + rect.Height - lineWidth,
+                              rect.Width + lineWidth,
+                              1 + lineWidth), color);
         }
     }
 }

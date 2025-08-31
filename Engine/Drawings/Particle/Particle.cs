@@ -39,7 +39,7 @@ namespace Engine.Drawings.Particle
 
         }
     }
-    public class Particle : Sprite
+    public class Particle : SpriteOLD
     {
         public bool isActive = true;
         public Trajectory trajectory;

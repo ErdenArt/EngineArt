@@ -155,8 +155,21 @@ namespace Engine.Mathematic
         }
         public static Vector2Int GetMousePositionToWorld(Camera camera)
         {
-            return (Vector2Int)((Mouse.GetState().Position.ToVector2() + camera.GetPosition()) / camera.Zoom);
+            Vector2 reverseMouse = Mouse.GetState().Position.ToVector2();
+            reverseMouse = new Vector2(reverseMouse.X, -reverseMouse.Y);
+            return (Vector2Int)((reverseMouse + camera.GetPosition()) / camera.Zoom);
         }
 
+
+
+        // THIS NEEDS MORE TESTING.
+        // WORKS BECAUSE OF + (Vector2Int)rect.Size / 2
+        // AND I DONT KNOW WHY
+        // FOR GAME JAM ITS GOOD ENOUGH
+        public static bool IsCursorHoveringRect(Camera camera, Rectangle rect)
+        {
+            Vector2Int clickPos = GetMousePositionToWorld(camera);
+            return rect.Contains((Vector2)clickPos);
+        }
     }
 }

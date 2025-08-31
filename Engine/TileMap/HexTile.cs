@@ -2,7 +2,7 @@
 
 namespace Engine.TileMap
 {
-    internal class HexTile : Sprite
+    internal class HexTile : SpriteOLD
     {
         enum TileType
         {

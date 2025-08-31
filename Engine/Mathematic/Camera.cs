@@ -10,12 +10,12 @@ namespace Engine.Mathematic
         public float Zoom = 1f;
         public Camera()
         {
-            vectorPos = new Vector2(GLOBALS.Graphics.PreferredBackBufferWidth / 2, GLOBALS.Graphics.PreferredBackBufferHeight / 2);
+            vectorPos = new Vector2(GLOBALS.WindowSize.X / 2, GLOBALS.WindowSize.Y / 2);
             previusLookPos = vectorPos;
         }
         public void Update(Vector2 lookPos, float zPos)
         {
-            Vector2 offSetVector = new Vector2(GLOBALS.Graphics.PreferredBackBufferWidth / 2, GLOBALS.Graphics.PreferredBackBufferHeight / 2);
+            Vector2 offSetVector = new Vector2(GLOBALS.WindowSize.X / 2, GLOBALS.WindowSize.Y / 2);
             lookPos = lookPos * zPos;
             previusLookPos = lookPos;
             var offSet = Matrix.CreateTranslation(offSetVector.X, offSetVector.Y, 0);
@@ -37,7 +37,7 @@ namespace Engine.Mathematic
             zPos -= Input.MouseScrollIsGointDown() ? 0.1f : 0;
             zPos = Math.Max(zPos, 0.1f);
 
-            Vector2 offSetVector = new Vector2(GLOBALS.Graphics.PreferredBackBufferWidth / 2, GLOBALS.Graphics.PreferredBackBufferHeight / 2);
+            Vector2 offSetVector = new Vector2(GLOBALS.WindowSize.X / 2, GLOBALS.WindowSize.Y / 2);
             lookPos = lookPos * zPos;
             var offSet = Matrix.CreateTranslation(offSetVector.X, offSetVector.Y, 0);
             var position = Matrix.CreateTranslation(-lookPos.X, -lookPos.Y, 0);

@@ -2,7 +2,7 @@
 
 namespace Engine.Drawings
 {
-    public class Animate : Sprite
+    public class Animate : SpriteOLD
     {
         //Vector2Int spriteSheetSize;
         int curFrame = 0;
