@@ -19,25 +19,48 @@ namespace EngineArt.Engine
         private float width;
         private float height;
         public float Width { get => width; set => width = value; }
-        public float Height { get => height; set => height = -value; }
+        public float Height { get => height; set => height = value; }
 
 
         //public float Top { get => y; }
         //public float Right { get => x + Width; }
         //public float Left { get => x; }
         //public float Bottom { get => y + height; }
+        public void Update(Vector2 pos, Vector2 size)
+        {
+            Position = pos;
+            Width = size.X;
+            Height = size.Y;
 
-        //public bool HasPoint(Vector2 point)
-        //{
-        //    return x <= point.X &&
-        //           y <= point.Y &&
-        //           x + width >= point.X &&
-        //           y + height >= point.Y;
-        //}
-        //static public bool HasPoint(Collider collider, Vector2 point)
-        //{
-        //    return collider.HasPoint(point);
-        //}
+            x = Position.X - Width / 2;
+            y = Position.Y - Height / 2;
+            endX = x + Width;
+            endY = y + Height;
+        }
+        public void UpdatePerSprite(Sprite sprite, Vector2 addictionalPos = default, Vector2 addictionalSize = default)
+        {
+            Position = sprite.Position + addictionalPos;
+            Width = sprite.Texture.Width * sprite.SpriteScale.X + addictionalSize.X;
+            Height = sprite.Texture.Height * sprite.SpriteScale.Y + addictionalSize.Y;
+
+            x = Position.X - Width / 2;
+            y = Position.Y - Height / 2;
+            endX = x + Width;
+            endY = y + Height;
+
+            Debug.WriteLine(sprite.Texture.Height);
+        }
+        public bool Contains(Vector2 point)
+        {
+            return x <= point.X &&
+                   y <= point.Y &&
+                   x + width >= point.X &&
+                   y + height >= point.Y;
+        }
+        static public bool Contains(Collider collider, Vector2 point)
+        {
+            return collider.Contains(point);
+        }
         public bool Intersection(Collider collider)
         {
             return IsIntersecting1D(this.x, endX, collider.x, collider.endX)
@@ -47,30 +70,9 @@ namespace EngineArt.Engine
         {
             return xmax1 >= xmin2 && xmax2 >= xmin1;
         }
-
         protected override void UpdateForParent()
         {
-            if (Parent is Sprite)
-            {
-                Sprite subclass = (Sprite)Parent;
-                x = subclass.X - subclass.Texture.Width / 2;
-                endX = subclass.X + subclass.Texture.Width;
-                y = subclass.Y - subclass.Texture.Width / 2;
-                endY = subclass.Y + subclass.Texture.Height;
-                width = subclass.Texture.Width;
-                height = subclass.Texture.Height;
-            }
-            else
-            {
-                // Default
-                x = Parent.X - 0.5f;
-                endX = Parent.X + 0.5f;
-                y = Parent.Y - 0.5f;
-                endY = Parent.Y + 0.5f;
-                width = 1f;
-                height = 1f;
-            }
-
+            
         }
         public Rectangle ToRectangle()
         {
@@ -79,6 +81,7 @@ namespace EngineArt.Engine
         public void DrawCollider(Color color = default, int width = 1)
         {
             if (color == default) color = Color.Red;
+
             Shape.DrawEmptyBox(this.ToRectangle(), color, width);
         }
         public Collider()

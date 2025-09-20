@@ -37,25 +37,29 @@ namespace Engine.TileMap
             this.maxWidth = textureTiles.Width / widthOfTile;
             this.visible = visible;
 
-            StreamReader reader = new StreamReader(fileCSV);
-            if (reader == null) throw new Exception("This CSV file does not exist");
-            string line;
-            int y = 0; // How far down are we
 
-            while ((line = reader.ReadLine()) != null)
+            using (var stream = TitleContainer.OpenStream("Content/" + fileCSV))
+            using (var reader = new StreamReader(stream))
             {
-                string[] items = line.Split(',');
-                for (int i = 0; i < items.Length; i++)
+                Debug.WriteLine("seks");
+                string line;
+                int y = 0; // How far down are we
+
+                while ((line = reader.ReadLine()!) != null)
                 {
-                    if (int.TryParse(items[i], out int value))
+                    string[] items = line.Split(',');
+                    for (int i = 0; i < items.Length; i++)
                     {
-                        if (value != -1)
+                        if (int.TryParse(items[i], out int value))
                         {
-                            tiles.Add(new Rectangle(i * tileSize.Width + tileMapPosition.ToPoint().X, y * tileSize.Height + tileMapPosition.ToPoint().Y, tileSize.Width, tileSize.Height), value);
+                            if (value != -1)
+                            {
+                                tiles.Add(new Rectangle(i * tileSize.Width + tileMapPosition.ToPoint().X, y * tileSize.Height + tileMapPosition.ToPoint().Y, tileSize.Width, tileSize.Height), value);
+                            }
                         }
                     }
+                    y++;
                 }
-                y++;
             }
         }
         public TileMap2D(Vector2 tileMapPosition, Texture2D textureTiles, Vector2Int tileSize, int widthOfTile, Vector2Int tilemapSize, bool visible = true)

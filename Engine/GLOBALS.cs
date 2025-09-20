@@ -4,15 +4,15 @@ namespace Engine
 {
     public static class GLOBALS
     {
-        public static ContentManager Content { get; set; }
-        public static GraphicsDevice GraphicsDevice { get; set; }
-        public static GraphicsDeviceManager Graphics { get; set; }
-        public static SpriteBatch SpriteBatch { get; set; }
-        public static Game Game { get; set; }
-        public static GameTime Time { get; set; }
+        public static ContentManager Content { get; set; } = default!;
+        public static GraphicsDevice GraphicsDevice { get; set; } = default!;
+        public static GraphicsDeviceManager Graphics { get; set; } = default!;
+        public static SpriteBatch SpriteBatch { get; set; } = default!;
+        public static Game Game { get; set; } = default!;
+        public static GameTime Time { get; set; } = default!;
         public static float DeltaTime { get; set; }
-        public static Texture2D Pixel;
-        public static SpriteFont Font;
+        public static Texture2D Pixel = default!;
+        public static SpriteFont Font = default!;
 
 
         static Point _windowSize = new Point(1280,720);

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Engine.Mathematic
 {
@@ -33,11 +34,12 @@ namespace Engine.Mathematic
             {Keys.O, Buttons.None },
             {Keys.P, Buttons.None },
         };
-        // Translate normal buttons to fucked up buttons
-        private static Dictionary<Keys, Keys> bindedKeysTranslate = new()
+        public static Dictionary<string, Keys> macroKeyboard = new()
         {
-            {Keys.W, Keys.A },
-            {Keys.S, Keys.D},
+            { "moveUp", Keys.W },
+            { "moveDown", Keys.S },
+            { "moveLeft", Keys.A },
+            { "moveRight", Keys.D }
         };
         public static Vector2 LeftStickDirection
         {
@@ -91,6 +93,12 @@ namespace Engine.Mathematic
             if (isControllerActive)
                 return _currentGamePadState.IsButtonDown(keyboardToPad[key]);
             return _currentKeyState.IsKeyDown(key);
+        }
+        public static bool GetMacro(string key)
+        {
+            if (isControllerActive)
+                return _currentGamePadState.IsButtonDown(keyboardToPad[macroKeyboard[key]]);
+            return _currentKeyState.IsKeyDown(macroKeyboard[key]);
         }
         public static bool GetKeyUp(Keys key)
         {
@@ -155,9 +163,8 @@ namespace Engine.Mathematic
         }
         public static Vector2Int GetMousePositionToWorld(Camera camera)
         {
-            Vector2 reverseMouse = Mouse.GetState().Position.ToVector2();
-            reverseMouse = new Vector2(reverseMouse.X, -reverseMouse.Y);
-            return (Vector2Int)((reverseMouse + camera.GetPosition()) / camera.Zoom);
+            Vector2 mousePos = new Vector2(0,GLOBALS.WindowSize.Y) + Mouse.GetState().Position.ToVector2() * new Vector2(1,1);
+            return (Vector2Int)((mousePos + camera.GetPosition()) / camera.Zoom);
         }
 
 

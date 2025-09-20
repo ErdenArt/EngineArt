@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,17 +20,19 @@ namespace EngineArt.Engine.Drawings
         /// </summary>
         public Vector2 DrawOffSet { get => Texture.Bounds.Size.ToVector2() / 2; }
         public Vector2 SpriteScale = Vector2.One;
+
+        public Vector2Int SingleFrameSize = Vector2Int.Zero;
         public Color SpriteColor = Color.White;
+        public bool IsVisible = true;
 
         public Sprite(Texture2D texture)
         {
             Texture = texture;
             TextureSource = new Rectangle(0, 0, Texture.Width, Texture.Height);
-            Debug.WriteLine(Texture.Bounds.Location);
         }
-        public void Draw(float layerDepth = 0)
+        public virtual void Draw(float layerDepth = 0)
         {
-            if (Texture == null) return;
+            if (Texture == null && IsVisible == false) return;
 
             GLOBALS.SpriteBatch.Draw(
                 texture: Texture,
@@ -40,11 +43,49 @@ namespace EngineArt.Engine.Drawings
                 origin: DrawOffSet,
                 scale: SpriteScale,
                 effects: SpriteEffects.None,
-                layerDepth: layerDepth);
+                layerDepth: LayerDepthHelper(layerDepth));
+        }
+        public virtual void DrawFrame(Rectangle source ,float layerDepth = 0)
+        {
+            if (Texture == null && IsVisible == false) return;
+
+            GLOBALS.SpriteBatch.Draw(
+                texture: Texture,
+                position: Position,
+                sourceRectangle: source,
+                color: SpriteColor,
+                rotation: Rotation,
+                origin: source.Size.ToVector2() / 2,
+                scale: SpriteScale,
+                effects: SpriteEffects.None,
+                layerDepth: LayerDepthHelper(layerDepth));
+        }
+
+
+        // Values for LayerDepthHelper
+        static float min = -3000f;
+        static float max = 3000f;
+        public static void ChangeMinMaxDrawRange(float min, float max)
+        {
+            Sprite.min = min; 
+            Sprite.max = max;
+        }
+        /// <summary>
+        /// Calculates the layer depth value based on the specified draw layer, normalized within a defined range.
+        /// </summary>
+        /// <remarks>The method ensures that the returned value is clamped between 0 and 1, providing a
+        /// consistent depth calculation within the range defined by the internal <c>min</c> and <c>max</c>
+        /// values.</remarks>
+        /// <param name="drawLayer">The draw layer value to normalize. Typically represents the layer's position within the range.</param>
+        /// <returns>A normalized layer depth value between 0 and 1, where 0 corresponds to drawing to the bottom and 1 corresponds
+        /// to drawing on the top.</returns>
+        float LayerDepthHelper(float drawLayer)
+        {
+            return (1f - Math.Clamp((drawLayer - min) / (max - min), 0f, 1f));
         }
         protected override void UpdateForParent()
         {
-            
+
         }
     }
 }
