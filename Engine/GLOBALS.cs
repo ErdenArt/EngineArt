@@ -14,7 +14,6 @@ namespace Engine
         public static Texture2D Pixel = default!;
         public static SpriteFont Font = default!;
 
-
         static Point _windowSize = new Point(1280,720);
         public static Point WindowSize => _windowSize;
         public static void ChangeWindowSize(Point newSize)

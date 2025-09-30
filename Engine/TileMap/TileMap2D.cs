@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics;
 
+using EngineArt.Engine;
+
 namespace Engine.TileMap
 {
     public class TileMap2D
     {
-        Dictionary<Rectangle, int> tiles;
+        Dictionary<Collider, int> tiles;
         Vector2 tileMapPosition;
         Vector2Int tileSize;
         Texture2D texture;
@@ -29,7 +31,7 @@ namespace Engine.TileMap
         ///           <param name="fileCSV">File holding data of each pixel position</param>
         public TileMap2D(Vector2 tileMapPosition, Texture2D textureTiles, Vector2Int tileSize, int widthOfTile, string fileCSV, bool visible = true)
         {
-            this.tiles = new Dictionary<Rectangle, int>();
+            this.tiles = new Dictionary<Collider, int>();
             this.tileSize = tileSize;
             this.tileMapPosition = tileMapPosition;
             this.texture = textureTiles;
@@ -37,34 +39,31 @@ namespace Engine.TileMap
             this.maxWidth = textureTiles.Width / widthOfTile;
             this.visible = visible;
 
+            StreamReader reader = ReadData.Read_Embedded_CSV(fileCSV);
+            string line;
+            int y = 0; // How far down are we
 
-            using (var stream = TitleContainer.OpenStream("Content/" + fileCSV))
-            using (var reader = new StreamReader(stream))
+            while ((line = reader.ReadLine()!) != null)
             {
-                Debug.WriteLine("seks");
-                string line;
-                int y = 0; // How far down are we
-
-                while ((line = reader.ReadLine()!) != null)
+                string[] items = line.Split(',');
+                for (int i = 0; i < items.Length; i++)
                 {
-                    string[] items = line.Split(',');
-                    for (int i = 0; i < items.Length; i++)
+                    if (int.TryParse(items[i], out int value))
                     {
-                        if (int.TryParse(items[i], out int value))
+                        if (value != -1)
                         {
-                            if (value != -1)
-                            {
-                                tiles.Add(new Rectangle(i * tileSize.Width + tileMapPosition.ToPoint().X, y * tileSize.Height + tileMapPosition.ToPoint().Y, tileSize.Width, tileSize.Height), value);
-                            }
+                            tiles.Add(new Collider(i * tileSize.Width + tileMapPosition.ToPoint().X, y * tileSize.Height + tileMapPosition.ToPoint().Y, tileSize.Width, tileSize.Height), value);
+
+                            Debug.WriteLine($"{(i * tileSize.Width + tileMapPosition.ToPoint().X, y * tileSize.Height + tileMapPosition.ToPoint().Y, tileSize.Width, tileSize.Height)}");
                         }
                     }
-                    y++;
                 }
+                y++;
             }
         }
         public TileMap2D(Vector2 tileMapPosition, Texture2D textureTiles, Vector2Int tileSize, int widthOfTile, Vector2Int tilemapSize, bool visible = true)
         {
-            this.tiles = new Dictionary<Rectangle, int>();
+            this.tiles = new Dictionary<Collider, int>();
             this.tileSize = tileSize;
             this.tileMapPosition = tileMapPosition;
             this.texture = textureTiles;
@@ -77,7 +76,7 @@ namespace Engine.TileMap
             {
                 for (int j = 0; j < tilemapSize.Height; j++)
                 {
-                    tiles.Add(new Rectangle(i * tileSize.Width + tileMapPosition.ToPoint().X, j * tileSize.Height + tileMapPosition.ToPoint().Y, tileSize.Width, tileSize.Height), 0);
+                    tiles.Add(new Collider(i * tileSize.Width + tileMapPosition.ToPoint().X, j * tileSize.Height + tileMapPosition.ToPoint().Y, tileSize.Width, tileSize.Height), 0);
                 }
             }
         }
@@ -91,13 +90,13 @@ namespace Engine.TileMap
 
             foreach (var tile in tiles)
             {
-                GLOBALS.SpriteBatch.Draw(texture, tile.Key, new Rectangle(tile.Value % maxWidth * widthOfTile, tile.Value / maxWidth * widthOfTile, widthOfTile, widthOfTile), colorOfTiles, 0f, Vector2.Zero, SpriteEffects.None, 0);
+                GLOBALS.SpriteBatch.Draw(texture, tile.Key.ToRectangle(), new Rectangle(tile.Value % maxWidth * widthOfTile, tile.Value / maxWidth * widthOfTile, widthOfTile, widthOfTile), colorOfTiles, 0f, Vector2.Zero, SpriteEffects.None, 0);
                 //Debug.WriteLine(new Vector2(tile.Value % maxWidth * widthOfTile, tile.Value / maxWidth * widthOfTile));
             }
         }
-        public Rectangle[] GetCollision()
+        public Collider[] GetCollision()
         {
-            Rectangle[] result = new Rectangle[tiles.Count];
+            Collider[] result = new Collider[tiles.Count];
             int i = 0;
             foreach (var tile in tiles)
             {
@@ -110,10 +109,10 @@ namespace Engine.TileMap
 /// Gets tile that is closest based on coordinates. In other words it rounds coordinates to tile position
 /// </summary>
 /// <returns>Rectangle of tile</returns>
-        public bool TryGetCloseTile(Vector2 pos, out (Rectangle, int) tile)
+        public bool TryGetCloseTile(Vector2 pos, out (Collider, int) tile)
         {
             pos -= tileMapPosition;
-            Rectangle result = new Rectangle((int)Math.Floor(pos.X / tileSize.Width) * tileSize.Height, (int)Math.Floor(pos.Y / tileSize.Height) * tileSize.Width, widthOfTile, widthOfTile);
+            Collider result = new Collider((int)Math.Floor(pos.X / tileSize.Width) * tileSize.Height, (int)Math.Floor(pos.Y / tileSize.Height) * tileSize.Width, widthOfTile, widthOfTile);
             Debug.WriteLine(result);
             
             if (tiles.TryGetValue(result, out var value))
@@ -121,11 +120,11 @@ namespace Engine.TileMap
                 tile = (result, tiles[result]);
                 return true;
             }
-            tile = (Rectangle.Empty, 0);
+            tile = (Collider.Empty, 0);
             return false;
 
         }
-        public void RemoveTile(Rectangle tileToDelete)
+        public void RemoveTile(Collider tileToDelete)
         {
             tiles.Remove(tileToDelete);
         } 

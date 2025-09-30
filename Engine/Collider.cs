@@ -12,9 +12,11 @@ namespace EngineArt.Engine
 {
     public class Collider : GameObject
     {
-        private float x;
+        public static Collider Empty = new Collider();
+
+        public float X;
         private float endX;
-        private float y;
+        public float Y;
         private float endY;
         private float width;
         private float height;
@@ -22,20 +24,20 @@ namespace EngineArt.Engine
         public float Height { get => height; set => height = value; }
 
 
-        //public float Top { get => y; }
-        //public float Right { get => x + Width; }
-        //public float Left { get => x; }
-        //public float Bottom { get => y + height; }
+        public float Top { get => Y; }
+        public float Right { get => X + Width; }
+        public float Left { get => X; }
+        public float Bottom { get => Y + height; }
         public void Update(Vector2 pos, Vector2 size)
         {
             Position = pos;
             Width = size.X;
             Height = size.Y;
 
-            x = Position.X - Width / 2;
-            y = Position.Y - Height / 2;
-            endX = x + Width;
-            endY = y + Height;
+            X = Position.X - Width / 2;
+            Y = Position.Y - Height / 2;
+            endX = X + Width;
+            endY = Y + Height;
         }
         public void UpdatePerSprite(Sprite sprite, Vector2 addictionalPos = default, Vector2 addictionalSize = default)
         {
@@ -43,28 +45,27 @@ namespace EngineArt.Engine
             Width = sprite.Texture.Width * sprite.SpriteScale.X + addictionalSize.X;
             Height = sprite.Texture.Height * sprite.SpriteScale.Y + addictionalSize.Y;
 
-            x = Position.X - Width / 2;
-            y = Position.Y - Height / 2;
-            endX = x + Width;
-            endY = y + Height;
+            X = Position.X - Width / 2;
+            Y = Position.Y - Height / 2;
+            endX = X + Width;
+            endY = Y + Height;
 
-            Debug.WriteLine(sprite.Texture.Height);
         }
         public bool Contains(Vector2 point)
         {
-            return x <= point.X &&
-                   y <= point.Y &&
-                   x + width >= point.X &&
-                   y + height >= point.Y;
+            return X <= point.X &&
+                   Y <= point.Y &&
+                   X + width >= point.X &&
+                   Y + height >= point.Y;
         }
         static public bool Contains(Collider collider, Vector2 point)
         {
             return collider.Contains(point);
         }
-        public bool Intersection(Collider collider)
+        public bool Intersects(Collider collider)
         {
-            return IsIntersecting1D(this.x, endX, collider.x, collider.endX)
-                && IsIntersecting1D(this.y, this.endY, collider.endY, collider.endY);
+            return IsIntersecting1D(this.X, this.X + Width, collider.X, collider.X + collider.Width) &&
+                   IsIntersecting1D(this.Y, this.Y + Height, collider.Y, collider.Y + collider.Height);
         }
         bool IsIntersecting1D(float xmin1, float xmax1, float xmin2, float xmax2)
         {
@@ -76,7 +77,7 @@ namespace EngineArt.Engine
         }
         public Rectangle ToRectangle()
         {
-            return new Rectangle((int)Math.Round(x), (int)Math.Round(y), (int)Math.Round(width), (int)Math.Round(height));
+            return new Rectangle((int)Math.Round(X), (int)Math.Round(Y), (int)Math.Round(width), (int)Math.Round(height));
         }
         public void DrawCollider(Color color = default, int width = 1)
         {
@@ -87,6 +88,18 @@ namespace EngineArt.Engine
         public Collider()
         {
 
+        }
+        public Collider(float x, float y, float width, float height)
+        {
+            
+            this.X = x;
+            this.Y = y;
+            this.width = width;
+            this.height = height;
+        }
+        public override string ToString()
+        {
+            return $"({X}, {Y}, {Width}, {Height})";
         }
     }
 }
