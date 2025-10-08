@@ -69,7 +69,7 @@ namespace EngineArt.Engine
         }
         bool IsIntersecting1D(float xmin1, float xmax1, float xmin2, float xmax2)
         {
-            return xmax1 >= xmin2 && xmax2 >= xmin1;
+            return xmax1 > xmin2 && xmax2 > xmin1;
         }
         protected override void UpdateForParent()
         {
