@@ -1,4 +1,4 @@
-Monogame "Engine" that I use
+Monogame 2D "Engine" that I use
 
 Features:
 - Tilemap
