@@ -22,7 +22,7 @@ It provides all the essentials like tilemaps, colliders, and camera handling.
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/yourusername/2D-Engine-MonoGame.git
+   git clone https://github.com/ErdenArt/2D-Engine-MonoGame.git
 2. From your project add refrence to engine
    - Right click solution
    - Add -> Project Refrence
