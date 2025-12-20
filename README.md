@@ -4,6 +4,7 @@ A lightweight 2D engine built on top of the **MonoGame Framework**, designed to 
 It provides all the essentials like tilemaps, colliders, and camera handling.
 This small engine is made for being able to make quick prototypes. But also something you can expand more. 
 Main apppeal to this engine is ability to connect anything to everything~
+![Logo](assets/Github_collision presentation_1.gif)
 ---
 
 ## ✨ Features
