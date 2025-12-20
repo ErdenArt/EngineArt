@@ -15,7 +15,7 @@ namespace EngineArt
             var stream = assembley!.GetManifestResourceStream(fullpath);
             if (stream == null)
             {
-                throw new Exception("You're dumbass. This file doesn't exist or you forgot to change file to Embedded resource");
+                throw new Exception("ERROR. This file doesn't exist or you forgot to change file to Embedded resource");
             }
             StreamReader reader = new StreamReader(stream);
             return reader;
