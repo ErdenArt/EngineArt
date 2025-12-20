@@ -2,7 +2,8 @@
 
 A lightweight 2D engine built on top of the **MonoGame Framework**, designed to make 2D games faster and easier.  
 It provides all the essentials like tilemaps, colliders, and camera handling.
-
+This small engine is made for being able to make quick prototypes. But also something you can expand more. 
+~Main apppeal to this engine is ability to connect anything to everything~
 ---
 
 ## ✨ Features
@@ -18,6 +19,15 @@ It provides all the essentials like tilemaps, colliders, and camera handling.
 
 ---
 
+## 💟 What more you can expect to be added
+- **Animation system** - I want to add sprite and 2D Rig animations
+- **Time manager** - Everything will be on timeline that could be manipulated. No missing inputs and no missing frames
+- **More UI elements** - Sliders, checkboxes, buttons etc.
+- **Particle system** - Problematic thing to do because each particle is unique in it's own way, but I try to find a way that can fit well
+- **More camera options** - Mainly pixel perfect camera, but also more options to modify camera
+- **Raycasting** - Lasors
+
+---
 ## 🧠 Getting Started
 
 1. Clone the repo:
