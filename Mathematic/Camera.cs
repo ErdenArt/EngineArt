@@ -23,11 +23,12 @@
             vectorPos = lookPos - offSetVector;
         }
         Vector2 previusLookPos = Vector2.Zero;
+        // This is mostly used for quick Camera or debuging
         public void InputUpdate()
         {
             Vector2 lookPos = previusLookPos;
-            if (Input.GetKey(Keys.LeftShift)) lookPos += Input.LeftStickDirection;
-            lookPos += Input.LeftStickDirection;
+            if (Input.GetKey(Keys.LeftShift)) lookPos += Input.RightStickDirection;
+            lookPos += Input.RightStickDirection;
             previusLookPos = lookPos;
             float zPos = Zoom;
             zPos += Input.MouseScrollIsGointUp() ? 0.1f : 0;

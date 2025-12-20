@@ -1,15 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<PackageId>EngineArt</PackageId>
+		<RepositoryUrl>https://github.com/ErdenArt/EngineArt</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/ErdenArt/EngineArt</PackageProjectUrl>
+		<PackageTags>gamedev;csharp;dotnet;monogame;2d-game-engine</PackageTags>
 
-  <ItemGroup>
-    <PackageReference Include="ImGui.NET" Version="1.91.6.1" />
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.3" />
-    <PackageReference Include="MSTest.TestAdapter" Version="4.0.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
-  </ItemGroup>
+		<Description>A lightweight 2D game engine</Description>
+		<Authors>ErdenArt</Authors>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+		<AssemblyTitle>EngineArt</AssemblyTitle>
+		<Product>EngineArt</Product>
+		<Version>1.0.0</Version>
+		<AssemblyVersion>1.0.0</AssemblyVersion>
+		<FileVersion>1.0.0</FileVersion>
+
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+	
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ImGui.NET" Version="1.91.6.1" />
+        <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.3" />
+        <PackageReference Include="MSTest.TestAdapter" Version="4.0.2" />
+        <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
+    </ItemGroup>
 </Project>
