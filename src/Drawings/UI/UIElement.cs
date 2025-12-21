@@ -1,4 +1,5 @@
-﻿using EngineArt.Mathematic;
+﻿using System.Collections.Generic;
+using EngineArt.Mathematic;
 
 namespace EngineArt.Drawings.UI
 {

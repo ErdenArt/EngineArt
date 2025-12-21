@@ -1,4 +1,6 @@
-﻿namespace EngineArt.Mathematic
+﻿using System.Collections.Generic;
+
+namespace EngineArt.Mathematic
 {
     public enum Button
     {

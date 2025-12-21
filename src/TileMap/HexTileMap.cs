@@ -1,4 +1,6 @@
-﻿using EngineArt.Mathematic;
+﻿using System;
+using System.Collections.Generic;
+using EngineArt.Mathematic;
 
 namespace EngineArt.TileMap
 {

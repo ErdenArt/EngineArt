@@ -1,4 +1,6 @@
-﻿namespace EngineArt.Mathematic
+﻿using System;
+
+namespace EngineArt.Mathematic
 {
     public class Camera
     {

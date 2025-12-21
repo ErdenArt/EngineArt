@@ -1,4 +1,6 @@
-﻿namespace EngineArt.Drawings.Particle
+﻿using System;
+
+namespace EngineArt.Drawings.Particle
 {
     public class Trajectory
     {

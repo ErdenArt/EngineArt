@@ -1,4 +1,7 @@
-﻿namespace EngineArt.Drawings
+﻿using System;
+using System.Collections.Generic;
+
+namespace EngineArt.Drawings
 {
     public class TextObject
     {

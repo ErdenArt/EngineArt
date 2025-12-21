@@ -1,4 +1,5 @@
-﻿using EngineArt.Drawings;
+﻿using System;
+using EngineArt.Drawings;
 
 namespace EngineArt
 {
@@ -22,6 +23,8 @@ namespace EngineArt
         private float endY;
         private float width;
         private float height;
+        
+        public float Rotation;
         /// <summary>X position of center of Position</summary>
         public float X;
         /// <summary>Y position of center of Position</summary>

@@ -1,10 +1,17 @@
-﻿namespace EngineArt.Scenes
+﻿using System;
+using System.Collections.Generic;
+
+namespace EngineArt.Scenes
 {
     public class SceneManager
     {
         private int _sceneCounter = 0;
         public void AddNewScene(Scene scene, string name)
         {
+            if (_sceneName.ContainsKey(name))
+            {
+                throw new Exception("Can't have two scenes with the same name");
+            }
             _scenes.Add(_sceneCounter, scene);
             _sceneName.Add(name, _sceneCounter++);
         }

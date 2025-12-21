@@ -1,4 +1,6 @@
-﻿namespace EngineArt.Drawings.UI
+﻿using System;
+
+namespace EngineArt.Drawings.UI
 {
     public class UIText : UIElement
     {
