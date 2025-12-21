@@ -13,8 +13,8 @@ Main apppeal to this engine is ability to connect anything to everything~
 - **Tilemap System** – Supports both square and hex tilemaps  
 - **Colliders** – Simple collision components for tiles and entities  
 - **Sprite Rendering** – Layered sprite draw calls for depth sorting
-- **Input Handler** – Easy access to keyboard, mouse, and controller input  
-- **Scene Manager** – Handle multiple scenes with smooth transitions  
+- **Input Handler** – Easy access to keyboard and mouse
+- **Scene Manager** – Handle multiple scenes 
 - **Camera System** – Movable, zoomable camera with follow targets  
 - **UI Helpers** – Simple UI drawing methods (canvas, text, panels)  
 - **...And more...** – Constantly improving and adding new tools  
