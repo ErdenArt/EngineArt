@@ -5,16 +5,17 @@ namespace EngineArt.Drawings
 {
     public class Sprite : GameObject
     {
+        public static Texture2D NO_TEXTURE = new Texture2D(GLOBALS.GraphicsDevice, 0, 0);
         public Texture2D Texture;
         public Rectangle TextureSource;
         public float Rotation;
         /// <summary>
-        /// If you rotate sprite it will rotate around thier position. Changing it moves it from origin(Position)
+        /// If you rotate sprite it will rotate around their position. Changing it moves it from origin(Position)
         /// </summary>
         public Vector2 DrawOffSet { get => Texture.Bounds.Size.ToVector2() / 2; }
         public Vector2 SpriteScale = Vector2.One;
 
-        public Vector2Int SingleFrameSize = Vector2Int.Zero;
+        public Vector2Int SingleFrameSize => Vector2Int.Zero;
         public Color SpriteColor = Color.White;
         public bool IsVisible = true;
 

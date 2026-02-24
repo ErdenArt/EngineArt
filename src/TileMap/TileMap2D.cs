@@ -64,6 +64,16 @@ namespace EngineArt.TileMap
             }
             colorOfTiles =  new Color[1] {Color.White};
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tileMapPosition"></param>
+        /// <param name="textureTiles"></param>
+        /// <param name="tileSize"></param>
+        /// <param name="widthOfTile"></param>
+        /// <param name="tilemapSize"></param>
+        /// <param name="visible"></param>
+        /// <param name="colors"></param>
         public TileMap2D(Vector2 tileMapPosition, Texture2D textureTiles, Vector2Int tileSize, int widthOfTile, Vector2Int tilemapSize, bool visible = true, Color[] colors = null)
         {
             this.tiles = new Dictionary<Collider, int>();
@@ -88,10 +98,17 @@ namespace EngineArt.TileMap
             else
                 colorOfTiles = colors;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="camera"></param>
         public void Update(Camera camera)
         {
             Vector2Int tilePicked = (Vector2Int)((Input.GetMousePositionToWorld(camera) - tileMapPosition) / tileSize);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public void Draw()
         {
             if (visible == false) return;
@@ -134,6 +151,10 @@ namespace EngineArt.TileMap
             return false;
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tileToDelete"></param>
         public void RemoveTile(Collider tileToDelete)
         {
             tiles.Remove(tileToDelete);

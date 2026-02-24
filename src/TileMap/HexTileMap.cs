@@ -6,39 +6,24 @@ namespace EngineArt.TileMap
 {
     //This class is only for flat top
     //Flat top is superrior
-    internal class HexTileMap
-    {
-        private static int hexWidth;
-        private static int hexHeight;
-        Vector2Int tileSize;
-        int mapRadius;
+    public class HexTileMap
+    {        
         private Dictionary<(int q, int r), HexTile> tiles;
-        private Vector2Int center; // Center of map that is being created
-        List<HexTile> listOfCursorTile = new();
+        private Vector2 center; // Center of map that is being created
         HexTile tileSelctor;
-        public HexTile guessTileSelecotor;
-
-        HexTile closest;
-
-        Camera camera;
-
 
         // Hay all. Erden here
         // Center is fucked up. And I don't know why fix it when you are bored
         // Basicly guessTileSelector is messed up by it when center is not (0,0)
         // also  guessTileSelector doesn't seem to be 100% accurate more like 95%? It's still a lot but the 5%
-        public HexTileMap(int mapRadius, Vector2Int tileSize, Camera camera, Vector2Int center = default)
+        public HexTileMap(HexTile hexagon, Vector2 center = default)
         {
-            this.mapRadius = mapRadius;
             tiles = new Dictionary<(int q, int r), HexTile>();
-            hexWidth = tileSize.X;
-            hexHeight = tileSize.Y;
-            this.tileSize = tileSize;
             Texture2D txt_Tile = GLOBALS.Content.Load<Texture2D>("Tile");
-            this.camera = camera;
             tileSelctor = new HexTile(GLOBALS.Content.Load<Texture2D>("TileSelector"), Vector2.Zero, Color.White);
             guessTileSelecotor = new HexTile(GLOBALS.Content.Load<Texture2D>("TileSelector"), Vector2.Zero, Color.Orange);
 
+            
             this.center = center;
 
             for (int q = -mapRadius; q <= mapRadius; q++)
@@ -46,7 +31,7 @@ namespace EngineArt.TileMap
                 for (int r = Math.Max(-mapRadius, -q - mapRadius); r <= Math.Min(mapRadius, -q + mapRadius); r++)
                 {
                     tiles[(q, r)] = new HexTile(txt_Tile, center, q, r);
-                    tiles[(q, r)].position = center + GetPixelPositionAtHex(q, r);
+                    tiles[(q, r)].Position = center + GetPixelPositionAtHex(q, r);
                 }
             }
 
