@@ -1,9 +1,9 @@
 ﻿namespace EngineArt.Scenes
 {
-    public abstract class Scene
+    public abstract class BaseScene
     {
         protected readonly RenderTarget2D target;
-        public Scene()
+        public BaseScene()
         {
             target = GLOBALS.GetNewRenderTarget();
             Load();

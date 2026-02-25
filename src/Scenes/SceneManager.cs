@@ -6,7 +6,7 @@ namespace EngineArt.Scenes
     public class SceneManager
     {
         private int _sceneCounter = 0;
-        public void AddNewScene(Scene scene, string name)
+        public void AddNewScene(BaseScene scene, string name)
         {
             if (_sceneName.ContainsKey(name))
             {
@@ -17,10 +17,10 @@ namespace EngineArt.Scenes
         }
         public int ActiveScene { get; private set; }
 
-        private readonly Dictionary<int, Scene> _scenes = new Dictionary<int, Scene>();
+        private readonly Dictionary<int, BaseScene> _scenes = new Dictionary<int, BaseScene>();
         private readonly Dictionary<string, int> _sceneName = new Dictionary<string, int>();
 
-        public SceneManager(Scene startScene, string startSceneName)
+        public SceneManager(BaseScene startScene, string startSceneName)
         {
             _scenes.Add(_sceneCounter, startScene);
             _sceneName.Add(startSceneName, _sceneCounter++);

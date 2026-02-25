@@ -21,7 +21,6 @@ namespace EngineArt.Drawings
 
         public Sprite(Texture2D texture)
         {
-            Texture = texture;
             TextureSource = new Rectangle(0, 0, Texture.Width, Texture.Height);
         }
         public virtual void Draw(float layerDepth = 0)
