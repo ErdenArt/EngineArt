@@ -9,35 +9,51 @@ namespace EngineArt.Drawings
     public class Atlas
     {
         Texture2D texture;
-        Dictionary<string, Rectangle> sprites;
-        public Atlas(Texture2D texture, Dictionary<string, Rectangle> sprites)
+        Dictionary<string, Texture2D> sprites;
+        public Atlas(Texture2D texture, Dictionary<string, Rectangle> recs)
         {
             this.texture = texture;
-            this.sprites = sprites;
+            sprites = new Dictionary<string, Texture2D>();
+
+            foreach (var ele in recs)
+            {
+                Color[] sourceData = new Color[texture.Width * texture.Height];
+                texture.GetData(sourceData);
+                Color[] newColors = new Color[ele.Value.Width * ele.Value.Height];
+
+                for (int i = 0; i < ele.Value.Width; i++)
+                {
+                    for (int j = 0; j < ele.Value.Height; j++)
+                    {
+                        int sourceIndex = (ele.Value.X + i) + (ele.Value.Y + j) * texture.Width;
+                        int newColorPos = i + j * ele.Value.Width;
+                        newColors[newColorPos] = sourceData[sourceIndex];
+                    }
+                }
+                Texture2D croppedTexture = new Texture2D(GLOBALS.GraphicsDevice, ele.Value.Width, ele.Value.Height);
+                croppedTexture.SetData(newColors);
+                sprites.Add(ele.Key, croppedTexture);
+            }
         }
         public Texture2D GetTexture(string name)
         {
-            if (sprites.ContainsKey(name) == false)
-                throw new Exception("Texture name in atlas does NOT exists");
+            if (sprites.ContainsKey(name)) 
+                return sprites[name];
 
-            Rectangle rectangle = sprites[name];
-            Color[] sourceData = new Color[texture.Width * texture.Height];
-            texture.GetData(sourceData);
-            Color[] newColors = new Color[rectangle.Height * rectangle.Width];
-
-            for (int i = 0; i < rectangle.Width; i++)
+            throw new Exception("Texture does not exsists");
+        }
+        public Texture2D FirstTexture()
+        {
+            var first = sprites.First();
+            return GetTexture(first.Key);
+        }
+        public Texture2D GetTexture(int value)
+        {
+            if (sprites.Count <= value || value < 0)
             {
-                for (int j = 0; j < rectangle.Height; j++)
-                {
-                    int sourceIndex = (rectangle.X + i) + (rectangle.Y + j) * texture.Width;
-                    int newColorPos = i + j * rectangle.Width;
-                    newColors[newColorPos] = sourceData[sourceIndex];
-                }
+                throw new Exception("Atlas index is out of range!");
             }
-
-            Texture2D newTexture = new Texture2D(GLOBALS.GraphicsDevice, rectangle.Width, rectangle.Height);
-            newTexture.SetData(newColors);
-            return newTexture;
+            return GetTexture(sprites.ElementAt(value).Key);
         }
     }
 }

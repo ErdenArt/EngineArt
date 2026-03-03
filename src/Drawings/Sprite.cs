@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Diagnostics;
 using EngineArt.Mathematic;
 
 namespace EngineArt.Drawings
 {
     public class Sprite : GameObject
     {
-        public static Texture2D NO_TEXTURE = new Texture2D(GLOBALS.GraphicsDevice, 0, 0);
+        public static Texture2D NO_TEXTURE = new Texture2D(GLOBALS.GraphicsDevice, 1, 1);
+
         public Texture2D Texture;
         public Rectangle TextureSource;
         public float Rotation;
         /// <summary>
         /// If you rotate sprite it will rotate around their position. Changing it moves it from origin(Position)
         /// </summary>
-        public Vector2 DrawOffSet { get => Texture.Bounds.Size.ToVector2() / 2; }
+        public Vector2 offset = Vector2.Zero;
+        public Vector2 DrawOffSet { get => offset + Texture.Bounds.Size.ToVector2() / 2; set => offset = value; }
         public Vector2 SpriteScale = Vector2.One;
 
         public Vector2Int SingleFrameSize => Vector2Int.Zero;
@@ -21,11 +24,13 @@ namespace EngineArt.Drawings
 
         public Sprite(Texture2D texture)
         {
+            Texture = texture;
             TextureSource = new Rectangle(0, 0, Texture.Width, Texture.Height);
         }
+
         public virtual void Draw(float layerDepth = 0)
         {
-            if (Texture == null && IsVisible == false) return;
+            if (Texture == null || IsVisible == false) return;
 
             GLOBALS.SpriteBatch.Draw(
                 texture: Texture,
@@ -40,7 +45,7 @@ namespace EngineArt.Drawings
         }
         public virtual void DrawFrame(Rectangle source ,float layerDepth = 0)
         {
-            if (Texture == null && IsVisible == false) return;
+            if (Texture == null || IsVisible == false) return;
 
             GLOBALS.SpriteBatch.Draw(
                 texture: Texture,

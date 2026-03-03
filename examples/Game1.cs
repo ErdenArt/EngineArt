@@ -27,6 +27,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        GLOBALS.Game = this;
         GLOBALS.Graphics = _graphics;
         GLOBALS.Content = Content;
         GLOBALS.GraphicsDevice = GraphicsDevice;

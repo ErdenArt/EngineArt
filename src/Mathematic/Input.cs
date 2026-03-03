@@ -162,7 +162,7 @@ namespace EngineArt.Mathematic
         }
         public static Vector2Int GetMousePositionToWorld(Camera camera)
         {
-            Vector2 mousePos = new Vector2(0,GLOBALS.WindowSize.Y) + Mouse.GetState().Position.ToVector2() * new Vector2(1,1);
+            Vector2 mousePos = Mouse.GetState().Position.ToVector2();
             return (Vector2Int)((mousePos + camera.GetPosition()) / camera.Zoom);
         }
 

@@ -7,15 +7,19 @@ namespace EngineArt.TileMap
     public class HexTile : Sprite
     {
         // They are defining size of hexagon
-        float squareWidth, squareHight, triangleWidth;
+        internal float squareWidth, squareHight, triangleWidth;
 
         // How big is triangle in texture in width
-        int txtTriangleSize;
+        internal int txtTriangleSize;
+
+        // Size of hexagon
+        internal float hexWidth, hexHight;
+
         // Can be used to store info
-        int tileType;
+        public int tileType;
         // Position Q-column R-row
         public int Q, R;
-        public Vector2Int QRPosition => new Vector2Int(Q, R);
+        internal Vector2Int QRPosition => new Vector2Int(Q, R);
 
         /// <summary>
         /// Creates preset for hex tilemap
@@ -30,6 +34,9 @@ namespace EngineArt.TileMap
             this.squareHight = squareHight;
             this.triangleWidth = triangleWidth;
             this.txtTriangleSize = txtTriangleSize;
+
+            hexWidth = squareWidth + triangleWidth * 2;
+            hexHight = squareHight;
         }
         internal HexTile(Texture2D texture, Vector2 position, int txtTriangleSize, float squareWidth, float squareHight, float triangleWidth, int q, int r) : base(texture)
         {
@@ -38,6 +45,10 @@ namespace EngineArt.TileMap
             this.triangleWidth = triangleWidth;
             this.txtTriangleSize = txtTriangleSize;
             this.Position = position;
+
+            hexWidth = squareWidth + triangleWidth * 2;
+            hexHight = squareHight;
+
             Q = q;
             R = r;
         }
