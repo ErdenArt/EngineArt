@@ -1,5 +1,9 @@
 ﻿using EngineArt;
 using EngineArt.Mathematic;
+using EngineArt.Scenes;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 // This is how Game1 should be set up.
 // Whole project should have access to each thing at any time so you make Graphics, Content, SpriteBatch etc... GLOBAL
@@ -22,6 +26,8 @@ public class Game1 : Game
         _graphics.PreferredBackBufferHeight = GLOBALS.WindowSize.Y;
         _graphics.ApplyChanges();
         base.Initialize();
+
+
     }
 
     protected override void LoadContent()

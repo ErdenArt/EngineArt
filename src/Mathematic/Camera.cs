@@ -33,8 +33,8 @@ namespace EngineArt.Mathematic
             lookPos += Input.RightStickDirection;
             previusLookPos = lookPos;
             float zPos = Zoom;
-            zPos += Input.MouseScrollIsGointUp() ? 0.1f : 0;
-            zPos -= Input.MouseScrollIsGointDown() ? 0.1f : 0;
+            zPos += Input.MouseScrollIsGoingUp() ? 0.1f : 0;
+            zPos -= Input.MouseScrollIsGoingDown() ? 0.1f : 0;
             zPos = Math.Max(zPos, 0.1f);
 
             Vector2 offSetVector = new Vector2(GLOBALS.WindowSize.X / 2, GLOBALS.WindowSize.Y / 2);

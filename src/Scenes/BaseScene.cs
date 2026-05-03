@@ -2,7 +2,7 @@
 {
     public abstract class BaseScene
     {
-        protected readonly RenderTarget2D target;
+        private readonly RenderTarget2D target;
         public BaseScene()
         {
             target = GLOBALS.GetNewRenderTarget();

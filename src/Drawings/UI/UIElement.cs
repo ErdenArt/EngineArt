@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using EngineArt.Mathematic;
+﻿using EngineArt.Mathematic;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace EngineArt.Drawings.UI
 {
@@ -26,8 +27,8 @@ namespace EngineArt.Drawings.UI
             {
                 if (parent != null)
                 {
-                    Point point = SetAligmentPositionForParent(Alignment, Bounds) 
-                                + parent.FinalBounds.Location 
+                    Point point = SetAligmentPositionForParent(Alignment, Bounds)
+                                + parent.FinalBounds.Location
                                 + Bounds.Location;
 
                     return new Rectangle(point.X, point.Y, Bounds.Width, Bounds.Height);
@@ -35,6 +36,9 @@ namespace EngineArt.Drawings.UI
                 return Bounds;
             }
         }
+
+        public bool canClick = false;
+        public Action actionOnClick;
         Point SetAligmentPositionForParent(Alignments alignmet, Rectangle rect)
         {
             Point setAligment = new Point(0, 0);
@@ -82,9 +86,9 @@ namespace EngineArt.Drawings.UI
         UIElement? parent;
         public List<UIElement> Children = new List<UIElement>();
 
-        public UIElement? Parent 
-        { 
-            get => parent; 
+        public UIElement? Parent
+        {
+            get => parent;
             set => parent = value;
         }
 
@@ -93,10 +97,65 @@ namespace EngineArt.Drawings.UI
             child.Parent = this;
             Children.Add(child);
         }
+        public void AddChildren(params UIElement[] uIElement)
+        {
+            foreach (var item in uIElement)
+            {
+                item.Parent = this;
+                Children.Add(item);
+            }
+        }
         public void RemoveChild(UIElement child)
         {
             Children.Remove(child);
         }
         public abstract void Draw();
+        public virtual void Update()
+        {
+            if (canClick == false || Input.GetMouseDown(Button.LeftClick) == false)
+                return;
+
+            Point pos = Input.GetMousePosition();
+            if (pos.X > FinalBounds.X && pos.X < FinalBounds.X + FinalBounds.Width &&
+                pos.Y > FinalBounds.Y && pos.Y < FinalBounds.Y + FinalBounds.Height)
+            {
+                actionOnClick.Invoke();
+            }
+        }
+        protected static Vector2 SetAligmentPosition(Alignments alignmets, Rectangle bounds)
+        {
+            Vector2 setAligment = new Vector2(0, 0);
+            switch (alignmets)
+            {
+                case Alignments.TopLeft:
+                    setAligment = new Vector2();
+                    break;
+                case Alignments.Top:
+                    setAligment = new Vector2(bounds.X + bounds.Width / 2, 0);
+                    break;
+                case Alignments.TopRight:
+                    setAligment = new Vector2(bounds.X + bounds.Width, 0);
+                    break;
+                case Alignments.Left:
+                    setAligment = new Vector2(0, bounds.Y + bounds.Height / 2);
+                    break;
+                case Alignments.Center:
+                    setAligment = new Vector2(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2);
+                    break;
+                case Alignments.Right:
+                    setAligment = new Vector2(bounds.X + bounds.Width, bounds.Y + bounds.Height / 2);
+                    break;
+                case Alignments.BottomLeft:
+                    setAligment = new Vector2(0, bounds.Y + bounds.Height);
+                    break;
+                case Alignments.Bottom:
+                    setAligment = new Vector2(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height);
+                    break;
+                case Alignments.BottomRight:
+                    setAligment = new Vector2(bounds.X + bounds.Width, bounds.Y + bounds.Height);
+                    break;
+            }
+            return setAligment;
+        }
     }
 }

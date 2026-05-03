@@ -148,11 +148,11 @@ namespace EngineArt.Mathematic
         {
             return _currentMouseState.ScrollWheelValue;
         }
-        public static bool MouseScrollIsGointUp()
+        public static bool MouseScrollIsGoingUp()
         {
             return _previousScrollSpeed < _currentMouseState.ScrollWheelValue;
         }
-        public static bool MouseScrollIsGointDown()
+        public static bool MouseScrollIsGoingDown()
         {
             return _previousScrollSpeed > _currentMouseState.ScrollWheelValue;
         }

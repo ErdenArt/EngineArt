@@ -16,11 +16,14 @@ namespace EngineArt
 
         static Point _windowSize = new Point(1280,720);
         public static Point WindowSize => _windowSize;
+
+        public static void TriggerWindowSize(object sender, EventArgs e)
+        {
+            ChangeWindowSize(Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Width);
+        }
         public static void ChangeWindowSize(int x, int y)
         {
             _windowSize = new Point(x, y);
-            Graphics.PreferredBackBufferWidth = x;
-            Graphics.PreferredBackBufferHeight = y;
             Graphics.ApplyChanges();
         }
         public static void Update(GameTime gameTime)
