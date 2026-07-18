@@ -69,6 +69,11 @@ namespace EngineArt.Mathematic
             return new Vector2Int(a.X / scalar, a.Y / scalar);
         }
 
+        public Vector2 ToVector2()
+        {
+            return new Vector2(X, Y);
+        }
+
         // Conversion from Vector2 to Vector2Int
         public static explicit operator Vector2Int(Vector2 v)
         {

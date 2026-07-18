@@ -27,7 +27,7 @@ namespace EngineArt.Drawings.UI
             {
                 if (parent != null)
                 {
-                    Point point = SetAligmentPositionForParent(Alignment, Bounds)
+                    Point point = SetAligmentPositionForParent(ScreenAlignment, Bounds)
                                 + parent.FinalBounds.Location
                                 + Bounds.Location;
 
@@ -82,7 +82,7 @@ namespace EngineArt.Drawings.UI
             return setAligment;
         }
 
-        public Alignments Alignment;
+        public Alignments ScreenAlignment;
         UIElement? parent;
         public List<UIElement> Children = new List<UIElement>();
 

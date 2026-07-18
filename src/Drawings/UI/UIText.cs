@@ -11,7 +11,7 @@ namespace EngineArt.Drawings.UI
         public Alignments TextAlignment;
 
         float rotation;
-        public float Rotation { get => MathHelper.ToRadians(rotation); set => rotation = MathHelper.ToDegrees(value); }
+        public float Rotation { get => MathHelper.ToRadians(rotation); set => rotation = value; }
 
         public float TextScale = 1f;
         public override void Draw()
@@ -24,10 +24,11 @@ namespace EngineArt.Drawings.UI
             for (int i = 0; i < lines.Length; i++)
             {
                 var fontSize = Font.MeasureString(lines[i]);
-                Vector2 endPosition = SetAligmentPosition(Alignment, Bounds)
+                Vector2 endPosition = SetAligmentPosition(ScreenAlignment, Bounds)
                                     + Position
                                     + i * Font.LineSpacing * TextScale * dir;
                 Vector2 RotationPosition = SetAligmentForText(Text, lines[i], Font, TextAlignment);
+                Debug.WriteLine("Drawing text: " + lines[i]);
                 GLOBALS.SpriteBatch.DrawString(Font, lines[i], endPosition, TextColor, Rotation, RotationPosition, TextScale, SpriteEffects.None, 0f);
             }
             //Debug.WriteLine(Parent);
@@ -39,15 +40,12 @@ namespace EngineArt.Drawings.UI
         }
         public static void Draw(SpriteFont spriteFont, String text, Color color, Alignments screenAlignment, Alignments textAlignment, Vector2 position, float textSize)
         {
-            // This thing is not updated
 
-            Vector2 endPosition = new Vector2();
-            //Debug.WriteLine(SetAligmentForText(text, spriteFont, textAlignment));
-            endPosition += SetAligmentPosition(screenAlignment, new Rectangle(0,0, GLOBALS.WindowSize.X, GLOBALS.WindowSize.Y))
-                         + SetAligmentForText(text, text, spriteFont, textAlignment)
-                         + position;
+            Vector2 endPosition = SetAligmentPosition(screenAlignment, new Rectangle((int)position.X, (int)position.Y, GLOBALS.WindowSize.X, GLOBALS.WindowSize.Y))
+                                + position;
 
-            GLOBALS.SpriteBatch.DrawString(spriteFont, text, endPosition, color, 0f, Vector2.Zero, textSize, SpriteEffects.None, 0);
+            Vector2 RotationPosition = SetAligmentForText(text, text, spriteFont, textAlignment);
+            GLOBALS.SpriteBatch.DrawString(spriteFont, text, endPosition, color, 0f, RotationPosition, textSize, SpriteEffects.None, 0);
         }
 
         static Vector2 SetAligmentForText(String wholeText, String lineOfText, SpriteFont font, Alignments alignment)
