@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EngineArt.Mathematic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +16,10 @@ namespace EngineArt.Drawings
             this.texture = texture;
             sprites = new Dictionary<string, Texture2D>();
 
+            Color[] sourceData = new Color[texture.Width * texture.Height];
+            texture.GetData(sourceData);
             foreach (var ele in recs)
             {
-                Color[] sourceData = new Color[texture.Width * texture.Height];
-                texture.GetData(sourceData);
                 Color[] newColors = new Color[ele.Value.Width * ele.Value.Height];
 
                 for (int i = 0; i < ele.Value.Width; i++)
@@ -34,6 +35,24 @@ namespace EngineArt.Drawings
                 croppedTexture.SetData(newColors);
                 sprites.Add(ele.Key, croppedTexture);
             }
+        }
+        public Atlas(Texture2D texture, Vector2Int singleFrameSize) : this(texture, BuildRects(texture, singleFrameSize))
+        {
+        }
+
+        private static Dictionary<string, Rectangle> BuildRects(Texture2D texture, Vector2Int singleFrameSize)
+        {
+            var dictionary = new Dictionary<string, Rectangle>();
+            int name = 0;
+            for (int i = 0; i < texture.Height; i += singleFrameSize.Height)
+            {
+                for (int j = 0; j < texture.Width; j += singleFrameSize.Width)
+                {
+                    name += 1;
+                    dictionary.Add(name.ToString(), new Rectangle(j, i, singleFrameSize.Width, singleFrameSize.Height));
+                }
+            }
+            return dictionary;
         }
         public Texture2D GetTexture(string name)
         {
