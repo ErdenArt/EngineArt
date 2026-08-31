@@ -25,10 +25,10 @@ namespace EngineArt.Drawings.UI
             {
                 var fontSize = Font.MeasureString(lines[i]);
                 Vector2 endPosition = SetAligmentPosition(ScreenAlignment, Bounds)
-                                    + Position
+                                    + FinalBounds.Location.ToVector2()
                                     + i * Font.LineSpacing * TextScale * dir;
                 Vector2 RotationPosition = SetAligmentForText(Text, lines[i], Font, TextAlignment);
-                Debug.WriteLine("Drawing text: " + lines[i]);
+
                 GLOBALS.SpriteBatch.DrawString(Font, lines[i], endPosition, TextColor, Rotation, RotationPosition, TextScale, SpriteEffects.None, 0f);
             }
             //Debug.WriteLine(Parent);
@@ -38,6 +38,12 @@ namespace EngineArt.Drawings.UI
                 child.Draw();
             }
         }
+
+        public UIText Copy()
+        {
+            return (UIText)this.MemberwiseClone();
+        }
+
         public static void Draw(SpriteFont spriteFont, String text, Color color, Alignments screenAlignment, Alignments textAlignment, Vector2 position, float textSize)
         {
 

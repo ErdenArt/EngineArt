@@ -5,6 +5,7 @@ namespace EngineArt.Scenes
 {
     public class SceneManager
     {
+        private Vector2 _cursorFrameOffSet;
         private int _sceneCounter = 0;
         public void AddNewScene(BaseScene scene, string name)
         {
@@ -37,13 +38,20 @@ namespace EngineArt.Scenes
             ActiveScene = _sceneName[sceneName];
             _scenes[ActiveScene].Activate(enterDoor);
         }
-        public void Update()
+        public void Update(GameTime gameTime)
         {
-            _scenes[ActiveScene].Update();
+            _scenes[ActiveScene].Update(gameTime);
         }
-        public RenderTarget2D GetFrame()
+        public RenderTarget2D GetFrame(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            return _scenes[ActiveScene].GetFrame();
+            return _scenes[ActiveScene].GetFrame(spriteBatch, gameTime);
+        }
+        public void SetCursorFrameOffSet(Vector2 position)
+        {
+            foreach (var scene in _scenes)
+            {
+                scene.Value.SetCursorFrameOffSet(position);
+            }
         }
     }
 }

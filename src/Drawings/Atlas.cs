@@ -1,6 +1,7 @@
 ﻿using EngineArt.Mathematic;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace EngineArt.Drawings
 
             Color[] sourceData = new Color[texture.Width * texture.Height];
             texture.GetData(sourceData);
+                        Debug.WriteLine(sourceData.Length);
             foreach (var ele in recs)
             {
                 Color[] newColors = new Color[ele.Value.Width * ele.Value.Height];
@@ -28,6 +30,8 @@ namespace EngineArt.Drawings
                     {
                         int sourceIndex = (ele.Value.X + i) + (ele.Value.Y + j) * texture.Width;
                         int newColorPos = i + j * ele.Value.Width;
+                        if (sourceIndex >= sourceData.Length)
+                            continue;
                         newColors[newColorPos] = sourceData[sourceIndex];
                     }
                 }
@@ -44,9 +48,9 @@ namespace EngineArt.Drawings
         {
             var dictionary = new Dictionary<string, Rectangle>();
             int name = 0;
-            for (int i = 0; i < texture.Height; i += singleFrameSize.Height)
+            for (int i = 0; i < texture.Height - 1; i += singleFrameSize.Height)
             {
-                for (int j = 0; j < texture.Width; j += singleFrameSize.Width)
+                for (int j = 0; j < texture.Width - 1; j += singleFrameSize.Width)
                 {
                     name += 1;
                     dictionary.Add(name.ToString(), new Rectangle(j, i, singleFrameSize.Width, singleFrameSize.Height));

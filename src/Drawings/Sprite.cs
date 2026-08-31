@@ -11,6 +11,10 @@ namespace EngineArt.Drawings
         public Texture2D Texture;
         public Rectangle TextureSource;
         public float Rotation;
+        public Rectangle Bounds => new Rectangle((int)Position.X - (int)(TextureSource.Width * SpriteScale.X / 2), 
+                                                 (int)Position.Y - (int)(TextureSource.Height * SpriteScale.Y / 2), 
+                                                 (int)(TextureSource.Width * SpriteScale.X), 
+                                                 (int)(TextureSource.Height * SpriteScale.Y));
         /// <summary>
         /// If you rotate sprite it will rotate around their position. Changing it moves it from origin(Position)
         /// </summary>

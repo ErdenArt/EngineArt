@@ -6,14 +6,15 @@ namespace EngineArt.Mathematic
 {
     public struct Vector2Int
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get=> _x; set=> _x = value; }
+        public int Y { get=> _y; set=> _y = value; }
+        int _x, _y;
         /// <summary>
-        /// Returns X.
+        /// Returns X. (Just a diffrent name)
         /// </summary>
         public int Width => X;
         /// <summary>
-        /// Returns Y.
+        /// Returns Y. (Just a diffrent name)
         /// </summary>
         public int Height => Y;
         /// <summary>

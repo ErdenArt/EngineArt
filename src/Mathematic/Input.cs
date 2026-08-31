@@ -22,6 +22,9 @@ namespace EngineArt.Mathematic
         private static GamePadState _currentGamePadState;
         private static GamePadState _previousGamePadState;
 
+        private static int _mouseCurrentScroll;
+        private static int _mousePreviusScroll;
+
         private static Dictionary<Keys, Buttons> keyboardToPad = new()
         {
             {Keys.W, Buttons.DPadUp},
@@ -147,6 +150,12 @@ namespace EngineArt.Mathematic
         public static int MouseScrollSpeed()
         {
             return _currentMouseState.ScrollWheelValue;
+        }
+        public static int MouseCurrentScroll()
+        {
+            _mousePreviusScroll = _mouseCurrentScroll;
+            _mouseCurrentScroll = _currentMouseState.ScrollWheelValue;
+            return _mousePreviusScroll - _mouseCurrentScroll;
         }
         public static bool MouseScrollIsGoingUp()
         {

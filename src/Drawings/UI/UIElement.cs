@@ -19,8 +19,16 @@ namespace EngineArt.Drawings.UI
     }
     public abstract class UIElement
     {
-        public Rectangle Bounds { get; set; }
-        public Vector2Int Position { get => (Vector2Int)FinalBounds.Location; set => Bounds = new Rectangle(value.X, value.Y, Bounds.Width, Bounds.Height); }
+        public bool Visible = true;
+        public Rectangle Bounds;
+        public Vector2Int Position { 
+            get => (Vector2Int)Bounds.Location; 
+            set => Bounds = new Rectangle(value.X, value.Y, Bounds.Width, Bounds.Height); }
+
+        /// <summary>
+        /// Returns position and size as <see cref="Rectangle"/>.
+        /// It uses position and size of <seealso cref="Parent"/> and <seealso cref="Bounds"/>
+        /// </summary> 
         public Rectangle FinalBounds
         {
             get
@@ -38,7 +46,12 @@ namespace EngineArt.Drawings.UI
         }
 
         public bool canClick = false;
-        public Action actionOnClick;
+
+        public Alignments ScreenAlignment;
+        UIElement? parent;
+        public List<UIElement> Children = new List<UIElement>();
+
+
         Point SetAligmentPositionForParent(Alignments alignmet, Rectangle rect)
         {
             Point setAligment = new Point(0, 0);
@@ -82,10 +95,6 @@ namespace EngineArt.Drawings.UI
             return setAligment;
         }
 
-        public Alignments ScreenAlignment;
-        UIElement? parent;
-        public List<UIElement> Children = new List<UIElement>();
-
         public UIElement? Parent
         {
             get => parent;
@@ -112,16 +121,21 @@ namespace EngineArt.Drawings.UI
         public abstract void Draw();
         public virtual void Update()
         {
-            if (canClick == false || Input.GetMouseDown(Button.LeftClick) == false)
-                return;
 
+        }
+        public bool IsClicked()
+        {
+            if (canClick == false || Input.GetMouseDown(Button.LeftClick) == false)
+                return false;
             Point pos = Input.GetMousePosition();
             if (pos.X > FinalBounds.X && pos.X < FinalBounds.X + FinalBounds.Width &&
                 pos.Y > FinalBounds.Y && pos.Y < FinalBounds.Y + FinalBounds.Height)
             {
-                actionOnClick.Invoke();
+                return true;
             }
+            return false;
         }
+        public virtual void OnClick() { }
         protected static Vector2 SetAligmentPosition(Alignments alignmets, Rectangle bounds)
         {
             Vector2 setAligment = new Vector2(0, 0);
