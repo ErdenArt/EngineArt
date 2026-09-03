@@ -19,7 +19,7 @@ namespace EngineArt.Drawings
 
             Color[] sourceData = new Color[texture.Width * texture.Height];
             texture.GetData(sourceData);
-                        Debug.WriteLine(sourceData.Length);
+
             foreach (var ele in recs)
             {
                 Color[] newColors = new Color[ele.Value.Width * ele.Value.Height];

@@ -23,17 +23,17 @@ namespace EngineArt.Drawings.UI
             if (!Visible)
                 return;
 
-            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(0), new Rectangle(Bounds.X, Bounds.Y, cornerSize.X, cornerSize.Y), BackgroundColor);
-            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(1), new Rectangle(Bounds.X + cornerSize.X, Bounds.Y, boxSize.X - cornerSize.X * 2, cornerSize.Y), BackgroundColor);
-            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(2), new Rectangle(Bounds.X + boxSize.X - cornerSize.X, Bounds.Y, cornerSize.X, cornerSize.Y), BackgroundColor);
+            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(0), new Rectangle(FinalBounds.X, FinalBounds.Y, cornerSize.X, cornerSize.Y), BackgroundColor);
+            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(1), new Rectangle(FinalBounds.X + cornerSize.X, FinalBounds.Y, boxSize.X - cornerSize.X * 2, cornerSize.Y), BackgroundColor);
+            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(2), new Rectangle(FinalBounds.X + boxSize.X - cornerSize.X, FinalBounds.Y, cornerSize.X, cornerSize.Y), BackgroundColor);
 
-            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(3), new Rectangle(Bounds.X, Bounds.Y + cornerSize.Y, cornerSize.X, boxSize.Y - cornerSize.X * 2), BackgroundColor);
-            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(4), new Rectangle(Bounds.X + cornerSize.X, Bounds.Y + cornerSize.Y, boxSize.X, boxSize.Y - cornerSize.X * 2), BackgroundColor);
-            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(5), new Rectangle(Bounds.X + boxSize.X - cornerSize.X, Bounds.Y + cornerSize.Y, cornerSize.X, boxSize.Y - cornerSize.X * 2), BackgroundColor);
+            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(3), new Rectangle(FinalBounds.X, FinalBounds.Y + cornerSize.Y, cornerSize.X, boxSize.Y - cornerSize.X * 2), BackgroundColor);
+            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(4), new Rectangle(FinalBounds.X + cornerSize.X, FinalBounds.Y + cornerSize.Y, boxSize.X, boxSize.Y - cornerSize.X * 2), BackgroundColor);
+            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(5), new Rectangle(FinalBounds.X + boxSize.X - cornerSize.X, FinalBounds.Y + cornerSize.Y, cornerSize.X, boxSize.Y - cornerSize.X * 2), BackgroundColor);
 
-            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(6), new Rectangle(Bounds.X, Bounds.Y + boxSize.Y - cornerSize.Y, cornerSize.X, cornerSize.Y), BackgroundColor);
-            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(7), new Rectangle(Bounds.X + cornerSize.X, Bounds.Y + boxSize.Y - cornerSize.Y, boxSize.X - cornerSize.X * 2, cornerSize.Y), BackgroundColor);
-            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(8), new Rectangle(Bounds.X + boxSize.X - cornerSize.X, Bounds.Y + boxSize.Y - cornerSize.Y, cornerSize.X, cornerSize.Y), BackgroundColor);
+            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(6), new Rectangle(FinalBounds.X, FinalBounds.Y + boxSize.Y - cornerSize.Y, cornerSize.X, cornerSize.Y), BackgroundColor);
+            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(7), new Rectangle(FinalBounds.X + cornerSize.X, FinalBounds.Y + boxSize.Y - cornerSize.Y, boxSize.X - cornerSize.X * 2, cornerSize.Y), BackgroundColor);
+            GLOBALS.SpriteBatch.Draw(textureAtlas.GetTexture(8), new Rectangle(FinalBounds.X + boxSize.X - cornerSize.X, FinalBounds.Y + boxSize.Y - cornerSize.Y, cornerSize.X, cornerSize.Y), BackgroundColor);
             foreach (var child in Children)
             {
                 child.Draw();

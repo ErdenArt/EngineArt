@@ -21,13 +21,15 @@ namespace EngineArt.Drawings.UI
     {
         public bool Visible = true;
         public Rectangle Bounds;
+        public Vector2Int PositionOffSet;
+
         public Vector2Int Position { 
             get => (Vector2Int)Bounds.Location; 
             set => Bounds = new Rectangle(value.X, value.Y, Bounds.Width, Bounds.Height); }
 
         /// <summary>
         /// Returns position and size as <see cref="Rectangle"/>.
-        /// It uses position and size of <seealso cref="Parent"/> and <seealso cref="Bounds"/>
+        /// It uses position and size of <seealso cref="Parent"/> and <seealso cref="Bounds"/> and should be used only for Draw() calls
         /// </summary> 
         public Rectangle FinalBounds
         {
@@ -37,7 +39,8 @@ namespace EngineArt.Drawings.UI
                 {
                     Point point = SetAligmentPositionForParent(ScreenAlignment, Bounds)
                                 + parent.FinalBounds.Location
-                                + Bounds.Location;
+                                + Bounds.Location
+                                + PositionOffSet;
 
                     return new Rectangle(point.X, point.Y, Bounds.Width, Bounds.Height);
                 }
@@ -127,6 +130,10 @@ namespace EngineArt.Drawings.UI
         {
             if (canClick == false || Input.GetMouseDown(Button.LeftClick) == false)
                 return false;
+            return IsHoveredOver();
+        }
+        public bool IsHoveredOver()
+        {
             Point pos = Input.GetMousePosition();
             if (pos.X > FinalBounds.X && pos.X < FinalBounds.X + FinalBounds.Width &&
                 pos.Y > FinalBounds.Y && pos.Y < FinalBounds.Y + FinalBounds.Height)
