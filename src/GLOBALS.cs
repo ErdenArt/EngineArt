@@ -24,7 +24,10 @@ namespace EngineArt
         public static void ChangeWindowSize(int x, int y)
         {
             _windowSize = new Point(x, y);
+            Graphics.PreferredBackBufferHeight = _windowSize.Y;
+            Graphics.PreferredBackBufferWidth = _windowSize.X;
             Graphics.ApplyChanges();
+            
         }
         public static void Update(GameTime gameTime)
         {
@@ -65,9 +68,9 @@ namespace EngineArt
             texture.SetData(new[] { Color.White });
             return texture;
         }
-        public static RenderTarget2D GetNewRenderTarget()
+        public static RenderTarget2D GetNewRenderTarget(int windowSizeX, int windowSizeY)
         {
-            return new RenderTarget2D(GraphicsDevice, WindowSize.X, WindowSize.Y);
+            return new RenderTarget2D(GraphicsDevice, windowSizeX, windowSizeY);
         }
     }
 }

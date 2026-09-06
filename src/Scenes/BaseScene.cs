@@ -10,9 +10,15 @@ namespace EngineArt.Scenes
         private readonly RenderTarget2D target;
         public BaseScene(Point sceneWindowSize)
         {
-            target = GLOBALS.GetNewRenderTarget();
+            target = GLOBALS.GetNewRenderTarget(sceneWindowSize.X, sceneWindowSize.Y);
             Load();
             _sceneWindowSize = sceneWindowSize;
+        }
+        public BaseScene()
+        {
+            target = GLOBALS.GetNewRenderTarget(GLOBALS.WindowSize.X, GLOBALS.WindowSize.Y);
+            Load();
+            _sceneWindowSize = GLOBALS.WindowSize;
         }
         public void SetCursorFrameOffSet(Vector2 position)
         {

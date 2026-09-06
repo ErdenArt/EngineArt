@@ -16,7 +16,8 @@ namespace EngineArt.Scenes
             _scenes.Add(_sceneCounter, scene);
             _sceneName.Add(name, _sceneCounter++);
         }
-        public int ActiveScene { get; private set; }
+        public int ActiveSceneID { get; private set; }
+        public BaseScene CurrentScene { get => _scenes[ActiveSceneID]; }
 
         private readonly Dictionary<int, BaseScene> _scenes = new Dictionary<int, BaseScene>();
         private readonly Dictionary<string, int> _sceneName = new Dictionary<string, int>();
@@ -25,26 +26,26 @@ namespace EngineArt.Scenes
         {
             _scenes.Add(_sceneCounter, startScene);
             _sceneName.Add(startSceneName, _sceneCounter++);
-            ActiveScene = 0;
-            _scenes[ActiveScene].Activate(0);
+            ActiveSceneID = 0;
+            _scenes[ActiveSceneID].Activate(0);
         }
         public void SwitchScene(int sceneID, int enterDoor = 0)
         {
-            ActiveScene = sceneID;
-            _scenes[ActiveScene].Activate(enterDoor);
+            ActiveSceneID = sceneID;
+            _scenes[ActiveSceneID].Activate(enterDoor);
         }
         public void SwitchScene(string sceneName, int enterDoor = 0)
         {
-            ActiveScene = _sceneName[sceneName];
-            _scenes[ActiveScene].Activate(enterDoor);
+            ActiveSceneID = _sceneName[sceneName];
+            _scenes[ActiveSceneID].Activate(enterDoor);
         }
         public void Update(GameTime gameTime)
         {
-            _scenes[ActiveScene].Update(gameTime);
+            _scenes[ActiveSceneID].Update(gameTime);
         }
         public RenderTarget2D GetFrame(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            return _scenes[ActiveScene].GetFrame(spriteBatch, gameTime);
+            return _scenes[ActiveSceneID].GetFrame(spriteBatch, gameTime);
         }
         public void SetCursorFrameOffSet(Vector2 position)
         {

@@ -17,6 +17,7 @@ namespace EngineArt.Drawings.UI
             Bounds = bounds;
             onResizeTrigger = false;
         }
+        public UICanvas(Point bounds) : this(new Rectangle(0, 0, bounds.X, bounds.Y)) { }
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
             if (onResizeTrigger == false) return;
