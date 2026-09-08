@@ -9,57 +9,50 @@ namespace EngineArt.Mathematic
 {
     public class Timer
     {
-        //public static GameTime gameTime = new GameTime();
-        //public static float deltaTime => (float)gameTime.ElapsedGameTime.TotalSeconds;
-        public bool isActive = true;
-        public float timerCount;
-        float resetToTime;
-        public bool endless = false;
-        public event EventHandler handler;
-        public Timer(float timerCount)
+        float time = 0;
+        float endTime = 0;
+        bool finish = false;
+        bool pause = false;
+        public Timer(float endTime)
         {
-            this.timerCount = timerCount;
+            this.endTime = endTime;
         }
-        public Timer(float timerCount, bool endless)
+        public bool IsRunning()
         {
-            this.timerCount = timerCount;
-            this.resetToTime = timerCount;
-            this.endless = endless;
+            return finish == false && pause == false;
         }
-        public void Update(GameTime gameTime) // Fitted to real time
+        public void Pause()
         {
-            if (this.isActive == false)
-                return;
-
-            timerCount -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (timerCount < 0)
-            {
-                handler?.Invoke(this, EventArgs.Empty);
-                if (endless)
-                    timerCount = resetToTime;
-                else
-                    isActive = false;
-            }
+            pause = true;
         }
-        public void FixedUpdate(float speed) // Fitted to framerate
+        public void Start()
         {
-            if (this.isActive == false)
-                return;
-
-            timerCount -= speed;
-            if (timerCount < 0)
-            {
-                handler?.Invoke(this, EventArgs.Empty);
-                if (endless)
-                    timerCount = resetToTime;
-                else
-                    isActive = false;
-            }
-            
+            pause = false;
         }
-        public override string ToString()
+        public float GetTime()
         {
-            return $"Timer:{timerCount}, Endless:{endless}";
+            return MathF.Min(time, endTime);
+        }
+        public float GetProgress()
+        {
+            return MathF.Min(time / endTime, 1);
+        }
+        public void Update()
+        {
+            if (pause) return;
+            time += (float)GLOBALS.Time.ElapsedGameTime.TotalSeconds;
+            if (time >= endTime) finish = true;
+        }
+        public void ReStart()
+        {
+            time = 0;
+            finish = false;
+            pause = false;
+        }
+        public void Reset()
+        {
+            time = 0;
+            finish = false;
         }
     }
 }

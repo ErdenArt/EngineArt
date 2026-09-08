@@ -36,69 +36,69 @@ namespace EngineArt.Drawings.Particle
     }
     public class Particle : SpriteOLD
     {
-        public bool isActive = true;
-        public Trajectory trajectory;
-        public Mathematic.Timer lifeTime;
-        public Particle(Particle particle, Trajectory trajectory)
-        {
-            this.texture = particle.texture;
-            this.position = particle.position;
-            //this.trajectory.floorY = trajectory.floorY + position.Y;
-            this.trajectory = trajectory;
-            this.lifeTime = new Mathematic.Timer(10);
-            this.lifeTime.handler += RemoveParticle;
-        }
-        public Particle(Particle particle, Trajectory trajectory, float lifeTime)
-        {
-            this.texture = particle.texture;
-            this.position = particle.position;
-            this.trajectory.floorY = trajectory.floorY + particle.position.Y;
-            this.trajectory = trajectory;
-            this.lifeTime = new Mathematic.Timer(lifeTime);
-            this.lifeTime.handler += RemoveParticle;
-        }
-        public Particle(Texture2D texture, Vector2 position) : base(texture, position)
-        {
-            this.lifeTime = new Mathematic.Timer(2);
-            this.lifeTime.handler += RemoveParticle;
-        }
-        public Particle(Texture2D texture, Vector2 position, Trajectory trajectory) : base(texture, position)
-        {
-            //Debug.WriteLine("selks");
-            this.trajectory = trajectory;
-            this.trajectory.floorY = this.trajectory.floorY + this.position.Y;
-            this.lifeTime = new Mathematic.Timer(2);
-            //Debug.WriteLine("siema");
-            this.lifeTime.handler += RemoveParticle;
-        }
-        public void Update(GameTime gameTime)
-        {
-            if (isActive == false)
-                return;
-            lifeTime.Update(gameTime);
-            //Debug.WriteLine(lifeTime.ToString());
-            MoveParticle(gameTime);
-        }
-        void RemoveParticle(object sender, EventArgs e)
-        {
-            isActive = false;
-        }
-        void MoveParticle(GameTime gameTime)
-        {
-            //Debug.WriteLine(position);
-            this.position += trajectory.direction * trajectory.initialSpeed +
-                        trajectory.gravityDirVector * trajectory.gravity;
-            //Debug.WriteLine(position);
-            this.trajectory.initialSpeed *= trajectory.drag;
-            //Debug.WriteLine($"{position.Y} and this {trajectory.floorY}");
-            //Debug.WriteLine(trajectory.colideWithFloor);
+        //public bool isActive = true;
+        //public Trajectory trajectory;
+        //public Mathematic.Timer lifeTime;
+        //public Particle(Particle particle, Trajectory trajectory)
+        //{
+        //    this.texture = particle.texture;
+        //    this.position = particle.position;
+        //    //this.trajectory.floorY = trajectory.floorY + position.Y;
+        //    this.trajectory = trajectory;
+        //    this.lifeTime = new Mathematic.Timer(10);
+        //    this.lifeTime.handler += RemoveParticle;
+        //}
+        //public Particle(Particle particle, Trajectory trajectory, float lifeTime)
+        //{
+        //    this.texture = particle.texture;
+        //    this.position = particle.position;
+        //    this.trajectory.floorY = trajectory.floorY + particle.position.Y;
+        //    this.trajectory = trajectory;
+        //    this.lifeTime = new Mathematic.Timer(lifeTime);
+        //    this.lifeTime.handler += RemoveParticle;
+        //}
+        //public Particle(Texture2D texture, Vector2 position) : base(texture, position)
+        //{
+        //    this.lifeTime = new Mathematic.Timer(2);
+        //    this.lifeTime.handler += RemoveParticle;
+        //}
+        //public Particle(Texture2D texture, Vector2 position, Trajectory trajectory) : base(texture, position)
+        //{
+        //    //Debug.WriteLine("selks");
+        //    this.trajectory = trajectory;
+        //    this.trajectory.floorY = this.trajectory.floorY + this.position.Y;
+        //    this.lifeTime = new Mathematic.Timer(2);
+        //    //Debug.WriteLine("siema");
+        //    this.lifeTime.handler += RemoveParticle;
+        //}
+        //public void Update(GameTime gameTime)
+        //{
+        //    if (isActive == false)
+        //        return;
+        //    lifeTime.Update(gameTime);
+        //    //Debug.WriteLine(lifeTime.ToString());
+        //    MoveParticle(gameTime);
+        //}
+        //void RemoveParticle(object sender, EventArgs e)
+        //{
+        //    isActive = false;
+        //}
+        //void MoveParticle(GameTime gameTime)
+        //{
+        //    //Debug.WriteLine(position);
+        //    this.position += trajectory.direction * trajectory.initialSpeed +
+        //                trajectory.gravityDirVector * trajectory.gravity;
+        //    //Debug.WriteLine(position);
+        //    this.trajectory.initialSpeed *= trajectory.drag;
+        //    //Debug.WriteLine($"{position.Y} and this {trajectory.floorY}");
+        //    //Debug.WriteLine(trajectory.colideWithFloor);
 
-        }
-        public override void Draw()
-        {
-            if (isActive == false)
-                return;
-            base.Draw();
-        }
+        //}
+        //public override void Draw()
+        //{
+        //    if (isActive == false)
+        //        return;
+        //    base.Draw();
+        //}
     }
 }
