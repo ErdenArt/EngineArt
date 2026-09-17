@@ -33,6 +33,10 @@ namespace EngineArt.Mathematic
         {
             return MathF.Min(time, endTime);
         }
+        public float GetEndTime()
+        {
+            return endTime;
+        }
         public float GetProgress()
         {
             return MathF.Min(time / endTime, 1);
