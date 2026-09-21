@@ -9,13 +9,18 @@ namespace EngineArt.Mathematic
 {
     public class Timer
     {
-        float time = 0;
+        // Time in seconds
+        public float Time = 0;
         float endTime = 0;
         bool finish = false;
         bool pause = false;
         public Timer(float endTime)
         {
             this.endTime = endTime;
+        }
+        public bool IsFinished()
+        {
+            return finish;
         }
         public bool IsRunning()
         {
@@ -31,7 +36,7 @@ namespace EngineArt.Mathematic
         }
         public float GetTime()
         {
-            return MathF.Min(time, endTime);
+            return MathF.Min(Time, endTime);
         }
         public float GetEndTime()
         {
@@ -39,23 +44,23 @@ namespace EngineArt.Mathematic
         }
         public float GetProgress()
         {
-            return MathF.Min(time / endTime, 1);
+            return MathF.Min(MathF.Max(Time / endTime, 0f), 1);
         }
         public void Update()
         {
             if (pause) return;
-            time += (float)GLOBALS.Time.ElapsedGameTime.TotalSeconds;
-            if (time >= endTime) finish = true;
+            Time += (float)GLOBALS.Time.ElapsedGameTime.TotalSeconds;
+            if (Time >= endTime) finish = true;
         }
-        public void ReStart()
+        public void ReStart(float startTime = 0)
         {
-            time = 0;
+            Time = startTime;
             finish = false;
             pause = false;
         }
-        public void Reset()
+        public void Reset(float startTime = 0)
         {
-            time = 0;
+            Time = startTime;
             finish = false;
         }
     }
