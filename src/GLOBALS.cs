@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Content;
+using System.Diagnostics;
 
 namespace EngineArt
 {
@@ -12,6 +13,30 @@ namespace EngineArt
         public static GameTime Time { get; set; } = default!;
         public static float DeltaTime { get; set; }
         public static Texture2D Pixel = default!;
+        public static Texture2D MISSING_TEXTURE = default!;
+        public static Texture2D GetMissingTexture()
+        {
+            Texture2D texture = new Texture2D(GraphicsDevice, 64, 64);
+            Color[] colorData = new Color[64*64];
+            for (int x = 0; x < 64; x++)
+            {
+                for (int y = 0; y < 64; y++)
+                {
+                    int index = y + 64 * x;
+
+                    if ((y < 32 && x < 32) || (y >= 32 && x >= 32))
+                    {
+                        colorData[index] = new Color(0xCE, 0x00, 0x9E, 0xFF);
+                    }
+                    else
+                    {
+                        colorData[index] = new Color(0xBC, 0xBC, 0xBC, 0xFF);
+                    }
+                }
+            }
+            texture.SetData(colorData);
+            return texture;
+        }
         public static SpriteFont Font = default!;
 
         static Point _windowSize = new Point(1280,720);
