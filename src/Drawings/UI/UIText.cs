@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
+using EngineArt.Mathematic;
 
 namespace EngineArt.Drawings.UI
 {
@@ -44,10 +46,10 @@ namespace EngineArt.Drawings.UI
             return (UIText)this.MemberwiseClone();
         }
 
-        public static void Draw(SpriteFont spriteFont, String text, Color color, Alignments screenAlignment, Alignments textAlignment, Vector2 position, float textSize)
+        public static void Draw(SpriteFont spriteFont, String text, Color color, Alignments screenAlignment, Alignments textAlignment, Vector2 position, float textSize, Vector2Int? screenSize = null)
         {
-
-            Vector2 endPosition = SetAligmentPosition(screenAlignment, new Rectangle((int)position.X, (int)position.Y, GLOBALS.WindowSize.X, GLOBALS.WindowSize.Y))
+            Point size = screenSize != null ? (Point)screenSize : GLOBALS.WindowSize;
+            Vector2 endPosition = SetAligmentPosition(screenAlignment, new Rectangle((int)position.X, (int)position.Y, size.X, size.Y))
                                 + position;
 
             Vector2 RotationPosition = SetAligmentForText(text, text, spriteFont, textAlignment);
